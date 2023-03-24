@@ -1,6 +1,6 @@
 <template>
     <v-app-bar>
-            <v-app-bar-title>{{ step + 1 }}. {{ thisStepName }}</v-app-bar-title>
+            <v-app-bar-title><span v-if="step > 0">{{ step }}. </span>{{ thisStepName }}</v-app-bar-title>
             <!--  -->
             <template v-slot:extension>
                 <v-progress-linear :model-value="(step / (steps.length - 1)) * 100" color="primary" height="6" />
