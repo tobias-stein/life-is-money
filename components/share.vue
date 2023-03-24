@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="open" width="auto" class="text-center">
       <template v-slot:activator="{ props }">
-            <v-btn variant="text" @click="open=true"><v-icon>mdi-share-variant</v-icon>Share</v-btn>
+            <v-btn icon variant="text" @click="open=true"><v-icon>mdi-share-variant</v-icon></v-btn>
       </template>
 
       <v-card>
@@ -24,9 +24,12 @@
 <script setup>
     import useDefaultStore from "@/stores";
     import QRCode from 'qrcode'
+	import { useDisplay } from "vuetify/lib/framework.mjs";
 
     const open = ref(false);
-    const store = useDefaultStore()
+    const store = useDefaultStore();
+
+    const display = useDisplay();
 
     const qrCode = ref("");
     const shareLink = computed(() => `${window.location.origin}/share/?code=${store.share()}`);
