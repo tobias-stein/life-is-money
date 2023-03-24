@@ -142,33 +142,26 @@
 			custom: function({ series, seriesIndex, dataPointIndex, w})
 			{
 				const year = dataPointIndex;
-				let message = "";
 				switch(seriesIndex)
 				{
 					// FI
 					case 0:
 					case 1:
-					{
-						const rate = w.config.series[0].data[dataPointIndex].y;
-						const [lower, upper] = w.config.series[1].data[dataPointIndex].y;
-
-						message = `<strong>${rate.toFixed(1)}/hr</strong> should be sufficient to sustain your monthly expenses of <strong>${store.minimum_monthly_expenses}</strong> for the next <strong>${store.founding_period}</strong> years. Any rate between <strong>${lower.toFixed(1)}-${upper.toFixed(1)}/hr</strong> should be enough for your finencial independence, that is, you could stop working in <strong>${year}</strong> years.`;
-						break;
-					}
-
-					// Insufficient founds
 					case 2:
 					case 3:
 					{
-						const rate = series[seriesIndex][dataPointIndex];
-						message = `<strong>${rate.toFixed(1)}/hr</strong> is insufficient and you might run out of founds!`;
-						break;
-					}
+						const rate = w.config.series[0].data[dataPointIndex].y;
+						const low_rate = Math.ceil([...series[2]].reverse()[0]) + 1;
 
-					default:
-						return '';
+						const summary = '<div class="summary_tooltip">'
+							+ `<p>Financial independence can be reached in <strong>${year} years</strong> with an hour rate of <strong style="color: ${theme.current.value.colors.primary};">${rate.toFixed(2)}</strong>.</p>`
+							+ '<div>';
+
+						return summary;
+					}
 				}
-				return '<p style="border: solid 2px #ccc; padding: 8px; width: 270px; overflow-wrap: break-word; word-all: break-word; hyphens: auto; white-space: initial;">' + message + '</p>'
+				
+				return "";
 			},
 			x: { formatter: function(x_value: number) { return `in ${x_value} years`; } }
 		}
@@ -208,7 +201,6 @@
 		// series.push({ name: 'Founds', type: 'line', data: toXY(data['user'].fail_values) });
 
 
-
 		chartOptions.yaxis.max = quantile([...data['user'].fi_values.values()], 0.9);
 		chartOptions.xaxis.max = store.founding_period;
 		chartOptions.chart.toolbar.tools.customIcons = [
@@ -230,3 +222,20 @@
 		updateChart.value++;
 	}
 </script>
+<style>
+.summary_tooltip {
+
+	position: fixed;
+	width: 265px;
+
+	margin: 0px; 
+	padding: 0px; 
+
+	overflow-wrap: break-word;
+	hyphens: auto; 
+	white-space: initial;
+	text-align: right;
+
+	transform: translateX(-300px) translateY(33px);
+}
+</style>
