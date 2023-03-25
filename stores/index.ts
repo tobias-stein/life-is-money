@@ -56,6 +56,8 @@ export default defineStore("defualt",
     {
         async show_notification(message: string): Promise<void> { /** dummy action that will be listened to from the index page. */ },
 
+        async show_donation(): Promise<void> { /** dummy action that will be listened to from the donation component. */ },
+
         async cancel_simulation() : Promise<void>
         {
             for(const cancel of this.simulation.cancel) { cancel("User cancelled simulation."); }
