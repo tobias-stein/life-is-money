@@ -1,30 +1,46 @@
 <template>
-    <v-card>
-        <v-card-text>
-            <v-alert icon="mdi-cogs" title="Simulation inputs" variant="tonal" border="start" class="mb-2">
+    <v-card class="ma-0 text-justify">
+        <v-card-text class="ma-0 pa-2">
+            
+            <v-alert icon="mdi-sigma" title="Total required founds" variant="tonal" density="compact" border="start" border-color="secondary" class="mb-2">
+                The total amount of funds required to sustain the specified duration of <strong>{{ store.founding_period }}</strong> years is <strong class="text-secondary">{{ compactNumber(total_required_founds) }}</strong>, which has been adjusted to account for the inflation rate over time.
+            </v-alert>
+
+            <v-alert icon="mdi-flag-triangle" title="Financial Independence"  variant="tonal" density="compact" border="start" border-color="primary" class="mb-2">
+                <v-table density="compact">
+                    <tbody>
+                        <tr v-for="item in [fi_quantile(0.05), fi_quantile(0.10), fi_quantile(0.20), fi_quantile(0.50)]" :key="item.year">
+                            <td>in <strong>{{ item.year }}</strong> years</td>
+                            <td>at a <strong>{{ compactNumber(item.rate || 0) }}</strong> hour rate</td>
+                        </tr>
+                    </tbody>
+                </v-table>
+            </v-alert>
+       
+            <v-alert icon="mdi-currency-usd" title="Minimum required hour rate" variant="tonal" density="compact" border="start" border-color="error" class="mb-2">
+                To adequately cover <strong>{{ compactNumber(store.minimum_monthly_expenses) }}</strong>'s monthly expenses over a <strong>{{ store.founding_period }}</strong>-year period, a minimum hourly rate of <strong class="text-primary">{{ compactNumber(min_required_rate_user) }}</strong> will be necessary. In the event of an unfavorable economic climate, a minimum hourly rate of <strong class="text-primary">{{ compactNumber(min_required_rate_wors) }}</strong>  will be required.
+            </v-alert>
+         
+            <v-alert icon="mdi-cogs" title="Simulation inputs" variant="tonal" density="compact" border="start" class="mb-2">
                 <v-table density="compact">
                     <tbody>
                         <tr>
                             <td>Min. monthly expenses</td>
-                            <td>{{ store.minimum_monthly_expenses.toFixed(2) }}</td>
+                            <td>{{ compactNumber(store.minimum_monthly_expenses) }}</td>
                         </tr>
                         <tr>
                             <td>Founding period</td>
                             <td>{{ store.founding_period }} years</td>
                         </tr>
                         <tr>
-                            <td>Total required founds (inflation adj.)</td>
-                            <td>{{ total_required_founds }}</td>
-                        </tr>
-                        <tr>
                             <td>Saving strategy</td>
                             <td v-if="store.monthly_saving_rate > 0">
                                 <v-icon x-small>mdi-cash-multiple</v-icon>
-                                {{ store.monthly_saving_rate.toFixed(2) }}
+                                {{ compactNumber(store.monthly_saving_rate) }}
                                 <v-icon x-small>mdi-menu-right</v-icon>
-                                <span><v-icon x-small>mdi-piggy-bank-outline</v-icon>{{ (store.monthly_saving_rate * (1.0 - store.saving_risk_ratio)).toFixed(2) }}</span>
+                                <span><v-icon x-small>mdi-piggy-bank-outline</v-icon>{{ compactNumber(store.monthly_saving_rate * (1.0 - store.saving_risk_ratio)) }}</span>
                                 +
-                                <span><v-icon x-small>mdi-bank-outline</v-icon>{{ (store.monthly_saving_rate * store.saving_risk_ratio).toFixed(2) }}</span>
+                                <span><v-icon x-small>mdi-bank-outline</v-icon>{{ compactNumber(store.monthly_saving_rate * store.saving_risk_ratio) }}</span>
                             </td>
                             <td v-else><v-icon x-small>mdi-currency-usd-off</v-icon></td>
                         </tr>
@@ -44,29 +60,15 @@
                     </tbody>
                 </v-table>
             </v-alert>
-            <v-alert icon="mdi-currency-usd" title="Minimum required hour rate" variant="tonal" border="start" border-color="error" class="mb-2">
-                In order to compensate <strong>{{ store.minimum_monthly_expenses.toFixed(2) }} monthly expenses</strong> over a period of <strong>{{ store.founding_period }}</strong> years, 
-                you will require a minimum hour rate of <strong class="text-primary">{{ min_required_rate_user }}</strong>. In case of a very bad economy a minimum hour rate of <strong class="text-primary">{{ min_required_rate_wors }}</strong> 
-                is required.
-            </v-alert>
-            <v-alert icon="mdi-flag-triangle" title="Financial Independence"  variant="tonal" border="start" border-color="primary" class="mb-2">
-                <v-table density="compact">
-                    <tbody>
-                        <tr v-for="item in [fi_quantile(0.05), fi_quantile(0.10), fi_quantile(0.20), fi_quantile(0.50)]" :key="item.year">
-                            <td>in <strong>{{ item.year }}</strong> years</td>
-                            <td>at a <strong>{{ item.rate }}</strong> hour rate</td>
-                        </tr>
-                    </tbody>
-                </v-table>
-            </v-alert>
-       
+
         </v-card-text>
     </v-card>
 </template>
 <script setup lang="ts">
     import useDefaultStore from "@/stores";
-    import { ISimulationResults, forecast_min_required_founds, quantile } from "@/src/util";
-
+    import { forecast_min_required_founds, quantile, compactNumber } from "@/src/util";
+    import { ISimulationResults } from "@/src/simulation";
+    
     const store = useDefaultStore();
 
     const { sim_data } = defineProps({
@@ -75,18 +77,18 @@
 
     const total_required_founds = computed(() => 
     {
-        return forecast_min_required_founds(store.minimum_monthly_expenses, store.anual_average_inflation_rate, store.founding_period).toFixed(2);
+        return forecast_min_required_founds(store.minimum_monthly_expenses, store.anual_average_inflation_rate, store.founding_period);
     });
 
     const min_required_rate_user = computed(() => 
     { 
-        if(sim_data['user'] === undefined) { return '' }
+        if(sim_data['user'] === undefined) { return 0 }
         return Math.ceil([...sim_data['user'].fail_values.values()].reverse()[0]) + 1; 
     });
 
     const min_required_rate_wors = computed(() => 
     { 
-        if(sim_data['worst'] === undefined) { return '' }
+        if(sim_data['worst'] === undefined) { return 0 }
         return Math.ceil([...sim_data['worst'].fail_values.values()].reverse()[0]) + 1; 
     }); 
 
