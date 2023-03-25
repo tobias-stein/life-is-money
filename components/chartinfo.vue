@@ -1,25 +1,19 @@
 <template>
-    <v-card>
-        <v-card-text>
-            <v-alert title="Financial Independence" variant="tonal" border="start" border-color="primary" class="mb-2">
-                <strong class="text-primary">Financial independence</strong> means having enough money to pay for all monthly required expenses without running out of money 
-                before the end of the total founding period. This means any hour rate above the <strong class="text-primary">Financial independence</strong> <strong>line</strong> 
-                for the next <strong>N</strong> years might bring your financial independence.
-                <p class="my-4">
-                    <strong>Example: </strong>Look at the charts horizontal axis. <strong>N</strong> will be the number of years from <strong>Today</strong>. All hour rates that lie above the 
-                <strong class="text-primary">Financial independence</strong> <strong>line</strong> at that year potentially will bring your financial independence.
-                </p>
-                Of course volatile economics will greatly influence this threshold. The <strong class="text-primary">Confidence interval</strong> shows you the range for each year with bad economics (upper bound) 
-                and good economics (lower bound).
+    <v-card class="ma-0 text-justify">
+        <v-card-text class="ma-0 pa-2">
+            <v-alert title="Founds" variant="tonal" density="compact" border="start" border-color="secondary" class="mb-2">
+                The <strong class="text-secondary">Founds</strong> <strong>line</strong> displays the growth of the total amount of funds over the years. To provide a comprehensive picture of the potential trajectory of funds under different economic conditions, a <strong class="text-secondary">confidence</strong> <strong>interval</strong> has been included. This interval illustrates the possible development of funds under favorable and unfavorable economic circumstances.
             </v-alert>
-            <v-alert title="Insufficient Founds" variant="tonal" border="start" border-color="error" class="mb-2">
-                The <strong class="text-error">Insufficient Founds</strong> <strong>line</strong> indicates the threshold of an hour rate that does not support the required monthly expenses.
-                In addition a <strong class="text-error">confidence interval</strong> is shown that outlines a range of insufficient rates in a scenario of bad economics.
+            <v-alert title="Financial Independence" variant="tonal" density="compact" border="start" border-color="primary" class="mb-2">
+                <strong class="text-primary">Financial independence</strong> is the state of having sufficient funds to cover all required monthly expenses without exhausting one's financial resources before the end of the funding period. In other words, any hourly rate above the <strong class="text-primary">Financial independence</strong> <strong>line</strong> has the potential to bring about financial independence for the remaining years of the fouding period.
+                It is important to note that this threshold is greatly influenced by economic volatility, and the <strong class="text-primary">confidence</strong> <strong>interval</strong> presented on the chart displays the potential range of hourly rates that may be required under conditions of both bad (upper bound) and good (lower bound) economics.
             </v-alert>
-            <v-alert title="Chart Interaction" variant="tonal" border="start" class="mb-2">
-                <p class="mb-2">Move your cursor across or click on the chart to reveal a tooltip in the top-right corner. The tooltip will present you a brief summary of the current hovered or clicked chart position.</p>
-                <p class="mb-2">You can zoom into a specific region of the chart by clicking and dragging your pointer to mark that region.</p>
-                <p class="mb-2">Use the small toolbar icons in the top-right corner of the chart to reset the zoom (<v-icon x-small>mdi-fit-to-screen</v-icon>) or download (<v-icon x-small>mdi-menu</v-icon>) the current chart as a file.</p>
+            <v-alert title="Insufficient Founds" variant="tonal" density="compact" border="start" border-color="error" class="mb-2">
+                The <strong class="text-error">Insufficient Founds</strong> <strong>line</strong> displays the minimum hourly rate required to cover monthly expenses, with any rate below this threshold resulting in insufficient funds to cover for the whole founding period. A <strong class="text-error">confidence</strong> <strong>interval</strong> is also included to provide an estimation of potential insufficient rates in the event of unfavorable economic conditions.
+            </v-alert>
+            <v-alert title="Chart Interaction" variant="tonal" density="compact" border="start" class="mb-2">
+                <p class="mb-2">To view more detailed information about the data represented in the chart, you can hover your cursor over or click on any point on the chart. A tooltip will appear in the top-right corner of the chart, providing a brief summary of the data point. You can also zoom in on a specific region of the chart by clicking and dragging your pointer to select that area.</p>
+                <p class="mb-2">Additionally, there are small toolbar icons located in the top-right corner of the chart that allow you to reset (<v-icon x-small>mdi-fit-to-screen</v-icon>) the zoom level or download (<v-icon x-small>mdi-menu</v-icon>) the current chart as a file.</p>
             </v-alert>
         </v-card-text>
     </v-card>
