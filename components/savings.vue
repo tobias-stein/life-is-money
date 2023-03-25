@@ -1,5 +1,5 @@
 <template>
-   	<div class="d-flex justify-center align-center">
+   	<div class="d-flex justify-center align-center text-justify">
 		<v-card flat max-width="640px">
 			<v-card-title>
 				<span>What are your current savings and investments?</span>
@@ -30,10 +30,16 @@
 			<v-card-actions>
 				<v-slider v-model="store.saving_risk_ratio" min="0.0" max="1.0" step="0.01" color="primary">
 					<template v-slot:prepend>
-					<div class="text-caption">No Risk</div>
+						<div class="text-center text-caption">
+						<v-icon x-small>mdi-piggy-bank-outline</v-icon>
+						<p>No Risk</p>
+						</div>
 					</template>
 					<template v-slot:append>
-					<div class="text-caption">All in!</div>
+					<div class="text-center text-caption">
+						<v-icon x-small>mdi-bank-outline</v-icon>
+						<p>Risk</p>
+					</div>
 					</template>
 				</v-slider>
 			</v-card-actions>
