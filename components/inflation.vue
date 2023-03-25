@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-center align-center">
-        <v-card flat max-width="640px">
+        <v-card flat max-width="640px" class="text-justify">
             <v-card-title>
                 <span>What is the expected average anual inflation rate?</span>
             </v-card-title>

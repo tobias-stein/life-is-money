@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex justify-center align-center">
+    <div class="d-flex justify-center align-center text-justify">
         <v-card flat max-width="640px">
             <v-card-title>
                 <span>What are the expected average anual taxes and returns?</span>
