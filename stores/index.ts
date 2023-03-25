@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { 
     ISimulationInput,
     ISimulationResults
-} from "@/src/util";
+} from "@/src/simulation";
 
 
 export default defineStore("defualt", 
