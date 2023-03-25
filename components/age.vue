@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex justify-center align-center">
+    <div class="d-flex justify-center align-center text-justify">
         <v-card flat max-width="640px">
             <v-card-title>
                 <span>What is your required founding period?</span>
@@ -8,17 +8,25 @@
                 The founding period is the time spanning from your current age until your death.
             </v-card-text>
             <v-card-actions>
-                <v-text-field v-model="current_age" type="number" label="Your current age" variant="outlined" />
+                <v-text-field v-model="current_age" type="number" label="Your current age" variant="outlined">
+                    <template v-slot:append-inner>Years</template>
+                </v-text-field>
             </v-card-actions>
             <v-card-actions>
-                <v-text-field v-model="expected_age" type="number" label="How long will you life?" variant="outlined" />
+                <v-text-field v-model="expected_age" type="number" label="How long will you life?" variant="outlined">
+                    <template v-slot:append-inner>Years</template>
+                    </v-text-field>
             </v-card-actions>
             <v-card-actions>
-                <v-text-field v-model="store.founding_period" disabled type="number" label="Total founding period" variant="outlined" />
+                <v-text-field v-model="store.founding_period" disabled label="Total founding period" variant="outlined">
+                    <template v-slot:append-inner>Years</template>
+                </v-text-field>
             </v-card-actions>
-            <v-alert icon="mdi-calendar-clock-outline" title="Founding period" variant="tonal" border="start" border-color="primary"  density=“compact”>
-                The <strong>founding period</strong> is the timespan in years from now until your estimated death.
-            </v-alert>
+            <v-card-text>
+                <v-alert icon="mdi-calendar-clock-outline" title="Founding period" append-inner="Years" variant="tonal" border="start" border-color="primary">
+                    The <strong>founding period</strong> refers to the length of time, measured in years, between the present day and the estimated date of your death. It is an important factor in financial planning, as it helps to determine the amount of funding required to cover expenses over the course of one's lifetime.
+                </v-alert>
+            </v-card-text>
         </v-card>
     </div>
 </template>
