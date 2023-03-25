@@ -5,7 +5,10 @@
             <template v-slot:extension>
                 <v-progress-linear :model-value="(step / (steps.length - 1)) * 100" color="primary" height="6" />
             </template>
-        <template v-slot:append><share /></template>
+        <template v-slot:append>
+            <donation />
+            <share />
+        </template>
     </v-app-bar>
     <v-card flat>
 
@@ -44,7 +47,7 @@
             {{ nextStepLabel }}
             <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
-        <v-btn v-else variant="flat" :disabled="store.is_busy" @click="step=1">
+        <v-btn v-else variant="flat" :disabled="store.is_busy" @click="startNewSimulation">
             Start a new simulation.
         </v-btn>
     </v-footer>
@@ -58,6 +61,8 @@
 
     const nofification = ref({ show: false, message: "" });
 	store.$onAction(({ name, args }) => { if(name === "show_notification") {  nofification.value.message = args[0]; nofification.value.show = true; } });
+
+	const show_donation = ref(true);
 
     const steps = [
         {
@@ -110,6 +115,17 @@
             onExit: async () => { },
         }
     ];
+
+    function startNewSimulation() 
+    {
+        if(show_donation.value)
+        {
+            store.show_donation();
+            show_donation.value = false;
+        }
+
+        step.value = 1;
+    }
 
     async function doSimulation() : Promise<void>
     {
