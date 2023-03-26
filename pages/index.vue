@@ -62,7 +62,7 @@
     const nofification = ref({ show: false, message: "" });
 	store.$onAction(({ name, args }) => { if(name === "show_notification") {  nofification.value.message = args[0]; nofification.value.show = true; } });
 
-	const show_donation = ref(true);
+	const sim_count = ref(0);
 
     const steps = [
         {
@@ -118,11 +118,8 @@
 
     function startNewSimulation() 
     {
-        if(show_donation.value)
-        {
-            store.show_donation();
-            show_donation.value = false;
-        }
+        if(sim_count.value === 0) { store.show_donation(); }
+        sim_count.value += 1;
 
         step.value = 1;
     }
@@ -163,6 +160,9 @@
 
             // go to final window
             step.value = steps.length - 1;
+
+            // hack: this will not show the donation dialog right away, when starting new simulation of a shared experience.
+            sim_count.value = - 1;
 
             // initialize simulation
             await doSimulation();
