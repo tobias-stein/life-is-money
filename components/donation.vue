@@ -19,7 +19,7 @@
                 you can express your appreciation by treating me to a cup of coffee<v-icon small class="ml-2">mdi-account-heart</v-icon>. Of course, if you are unable to do so, simply sharing 
                 this website with others would be a most welcome gesture as well.
             </span>
-            <v-img width="250px" src="/img/paypal_qrcode.png" style="left: 50%; transform: translateX(-50%);"/>
+            <v-img width="250px" src="/life-is-money/img/paypal_qrcode.png" style="left: 50%; transform: translateX(-50%);"/>
         </v-card-text>
         <v-card-actions class="d-flex justify-center mx-4">
             <v-btn href="https://paypal.me/tstein88" target="_blank" color="primary" variant="outlined" block @click="">PayPal<v-icon x-large class="ml-2">mdi-cash-fast</v-icon></v-btn>
