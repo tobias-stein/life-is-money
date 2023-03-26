@@ -8,12 +8,12 @@
                 The <strong>founding period</strong> refers to the length of time, measured in years, between the present day and the estimated date of your death. It is an important factor in financial planning, as it helps to determine the amount of funding required to cover expenses over the course of one's lifetime.
             </v-card-text>
             <v-card-actions>
-                <v-text-field v-model="current_age" type="number" label="Your current age" variant="outlined">
+                <v-text-field v-model="current_age" type="number" label="Your current age" variant="outlined" @update:focused="onFocus">
                     <template v-slot:append-inner>Years</template>
                 </v-text-field>
             </v-card-actions>
             <v-card-actions>
-                <v-text-field v-model="expected_age" type="number" label="How long will you live?" variant="outlined">
+                <v-text-field v-model="expected_age" type="number" label="How long will you live?" variant="outlined" @update:focused="onFocus">
                     <template v-slot:append-inner>Years</template>
                     </v-text-field>
             </v-card-actions>
@@ -31,23 +31,26 @@
     </div>
 </template>
 <script setup>
-import useDefaultStore from "@/stores"
+    import useDefaultStore from "@/stores"
 
-const store = useDefaultStore();
-const current_age = computed(
-{
-    get: function()         { return store.current_age; },
-    set: function(newValue) 
-    { 
-        store.current_age = Math.min(Math.max(0.0, newValue), 120); 
-        store.expected_age = Math.min(Math.max(store.current_age + 1, store.expected_age), 121);
+    const store = useDefaultStore();
+    const current_age = computed(
+    {
+        get: function()         { return store.current_age; },
+        set: function(newValue) { store.current_age = Math.min(Math.max(0.0, newValue), 120); }
+    });
+
+    const expected_age = computed(
+    {
+        get: function()         { return store.expected_age; },
+        set: function(newValue) { store.expected_age = Math.min(Math.max(store.current_age + 1, newValue), 121); }
+    });
+
+    function onFocus(focused) 
+    {
+        if(!focused)
+        {
+            store.expected_age = Math.min(Math.max(store.current_age + 1, store.expected_age), 121);
+        }
     }
-});
-
-const expected_age = computed(
-{
-    get: function()         { return store.expected_age; },
-    set: function(newValue) { store.expected_age = Math.min(Math.max(store.current_age + 1, newValue), 121); }
-});
-
 </script>

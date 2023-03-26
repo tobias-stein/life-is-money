@@ -8,14 +8,14 @@
 				Savings generally refers to money that you set aside for future use, typically in a low-risk account like a savings account. The purpose of saving is to have a pool of funds that can be accessed quickly in case of an emergency or unexpected expense. Savings usually earn interest, but the rates tend to be lower than those of investments because they are considered to be lower risk.
 			</v-card-text>
 			<v-card-actions>
-				<v-text-field v-model="initial_founds" type="number" label="Your current savings" variant="outlined" hide-details />
+				<v-text-field v-model="initial_founds" type="number" label="Your current savings" variant="outlined" hide-details  @update:focused="(value) => focused_founds=value" />
 			</v-card-actions>
 
 			<v-card-text>
 				Investments involve using your money to generate a return that is higher than the rate of inflation. Investments can include a wide range of assets, such as stocks, bonds, real estate, mutual funds, and more. Investments come with a higher level of risk than savings because their value can fluctuate significantly over time, but they also have the potential to earn a higher rate of return.
 			</v-card-text>
 			<v-card-actions>
-				<v-text-field v-model="initial_invest" type="number" label="Your current investments" variant="outlined" hide-details />
+				<v-text-field v-model="initial_invest" type="number" label="Your current investments" variant="outlined" hide-details  @update:focused="(value) => focused_invest=value" />
 			</v-card-actions>
 
 			<v-switch v-model="store.use_monthly_saving_plan" class="mx-2" color="primary" inset hide-details :label="`${store.use_monthly_saving_plan ? 'Use monthly saving strategy' : 'No saving strategy'}`" @update:model-value="onToggleSavingStrategy"/>
@@ -40,7 +40,7 @@
 					</v-slider>
 				</v-card-actions>
 				<v-card-actions>
-					<v-text-field v-model="monthly_saving_rate" type="number" label="Your monthly saving rate" variant="outlined" />
+					<v-text-field v-model="monthly_saving_rate" type="number" label="Your monthly saving rate" variant="outlined" @update:focused="(value) => focused_saving=value" />
 				</v-card-actions>
 			</template>
 			<v-card-text v-else>
@@ -61,22 +61,25 @@
 	import useDefaultStore from "@/stores"
 
 	const store = useDefaultStore();
+    const focused_founds = ref(false);
+    const focused_invest = ref(false);
+    const focused_saving = ref(false);
 
 	const initial_founds = computed(
 	{
-		get: function()         { return store.initial_founds; },
+		get: function()         { return focused_founds.value ? store.initial_founds : store.initial_founds.toFixed(2); },
 		set: function(newValue) { store.initial_founds = Math.max(0.0, newValue); }
 	});
 
 	const initial_invest = computed(
 	{
-		get: function()         { return store.initial_invest; },
+		get: function()         { return focused_invest.value ? store.initial_invest : store.initial_invest.toFixed(2); },
 		set: function(newValue) { store.initial_invest = Math.max(0.0, newValue); }
 	});
 
 	const monthly_saving_rate = computed(
 	{
-		get: function()         { return store.monthly_saving_rate; },
+		get: function()         { return focused_saving.value ? store.monthly_saving_rate : store.monthly_saving_rate.toFixed(2); },
 		set: function(newValue) { store.monthly_saving_rate = Math.max(0.0, newValue); }
 	});
 

@@ -11,7 +11,7 @@
             </v-card-text>
 
             <v-card-actions>
-                <v-text-field v-model="income_tax" type="number" suffix="%" label="Your income tax" variant="outlined" hide-details />
+                <v-text-field v-model="income_tax" type="number" suffix="%" label="Your income tax" variant="outlined" hide-details @update:focused="(value) => focused_income=value" />
             </v-card-actions>
 
             <v-card-text>
@@ -21,11 +21,11 @@
             </v-card-text>
 
             <v-card-actions>
-                <v-text-field v-model="invest_tax" type="number" suffix="%" label="Your investment tax" variant="outlined" hide-details />
+                <v-text-field v-model="invest_tax" type="number" suffix="%" label="Your investment tax" variant="outlined" hide-details @update:focused="(value) => focused_invest=value"  />
             </v-card-actions>
 
             <v-card-text>
-                <v-alert icon="mdi-hand-coin-outline" append-inner="Years" variant="tonal" border="start" border-color="primary">
+                <v-alert icon="mdi-hand-coin-outline" variant="tonal" border="start" border-color="primary">
                     Investment taxes can be of different types such as capital gains tax, dividend tax or interest tax. The investment tax rate can vary depending on the type of investment and the length of time the investment was held.
                 </v-alert>
             </v-card-text>
@@ -34,7 +34,7 @@
                 Annual average investment returns refer to the average percentage increase or decrease in the value of an investment over a period of one year, including any dividends or interest earned during that time.
             </v-card-text>
             <v-card-actions>
-                <v-text-field v-model="annual_average_invest_return" type="number" suffix="%" label="Avg. annual investment returns" variant="outlined" hide-details />
+                <v-text-field v-model="annual_average_invest_return" type="number" suffix="%" label="Avg. annual investment returns" variant="outlined" hide-details @update:focused="(value) => focused_return=value" />
             </v-card-actions>
 
             <v-card-text>
@@ -50,19 +50,23 @@ import useDefaultStore from "@/stores"
 
 const store = useDefaultStore();
 
+const focused_income = ref(false);
+const focused_invest = ref(false);
+const focused_return = ref(false);
+
 const income_tax = computed(
 {
-   get: function()         { return store.income_tax * 100; },
+   get: function()         { return focused_income.value ? store.income_tax * 100 : (store.income_tax * 100).toFixed(2); },
    set: function(newValue) { store.income_tax = newValue / 100; }
 });
 const invest_tax = computed(
 {
-   get: function()         { return store.invest_tax * 100; },
+   get: function()         { return focused_invest.value ? store.invest_tax * 100 : (store.invest_tax * 100).toFixed(2); },
    set: function(newValue) { store.invest_tax = newValue / 100; }
 });
 const annual_average_invest_return = computed(
 {
-   get: function()         { return store.annual_average_invest_return * 100; },
+   get: function()         { return focused_return.value ? store.annual_average_invest_return * 100 : (store.annual_average_invest_return * 100).toFixed(2); },
    set: function(newValue) { store.annual_average_invest_return = newValue / 100; }
 });
 </script>

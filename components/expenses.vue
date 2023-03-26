@@ -8,7 +8,7 @@
                 Expenditures refer to the money spent on goods and services. It encompasses all financial transactions, including purchases, investments, and payments made for various expenses, such as rent, utilities, food, transportation, taxes, and other essentials or discretionary items.
             </v-card-text>
             <v-card-actions>
-                <v-text-field v-model="minimum_monthly_expenses" type="number" label="Monthly Expenses" variant="outlined" hide-details="">
+                <v-text-field v-model="minimum_monthly_expenses" type="number" label="Monthly Expenses" variant="outlined" hide-details @update:focused="(value) => focused=value">
                     <template v-slot:append>
                         <v-switch v-model="annually" style="width: 120px;" color="primary" density="compact" class="mt-n2" hide-details inset :label="`${annually ? 'annually' : 'monthly'}`"/>
                     </template>
@@ -28,17 +28,19 @@
     const store = useDefaultStore();
     
     const annually = ref(false);
+    const focused = ref(false);
 
     const minimum_monthly_expenses = computed(
     {    
         get: function()         
         { 
-            return annually.value ? store.minimum_monthly_expenses * 12.0 : store.minimum_monthly_expenses; 
+            const value = annually.value ? store.minimum_monthly_expenses * 12.0 : store.minimum_monthly_expenses; 
+            return focused.value ? value : value.toFixed(2);
         },
         set: function(newValue) 
-        { 
+        {
             store.minimum_monthly_expenses = Math.max(0.0, annually.value ? newValue / 12.0 : newValue); 
         }
-    }); 
+    });
 
 </script>

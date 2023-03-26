@@ -25,7 +25,21 @@ export function forecast_min_required_founds(min_monthly_expense: number, avg_an
 {
     const min_annual_expense = min_monthly_expense * 12;
 
+    if(min_annual_expense <= 0 || founding_period_years < 0) { return 0; }
+
     const years = [...Array(founding_period_years).keys()];
 
     return years.map(year => min_annual_expense * Math.pow(1.0 + avg_annual_inflation, year)).reduce((sum, expense) => sum += expense, 0.0);
+}
+
+export function debounce(fn: Function, delay: number) 
+{
+    var timeoutID: number | undefined = undefined;
+    {
+        clearTimeout(timeoutID)
+        const args = arguments;
+        //@ts-ignore
+        const that = this;
+        timeoutID = setTimeout(function () { fn.apply(that, args) }, delay)
+    }
 }
