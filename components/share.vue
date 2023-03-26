@@ -29,7 +29,7 @@
     const store = useDefaultStore();
 
     const qrCode = ref("");
-    const shareLink = computed(() => `${window.location.origin}/share/?code=${store.share()}`);
+    const shareLink = computed(() => `${window.location.origin + window.location.pathname}/share/?code=${store.share()}`);
     function copyShareLink()
     {
         navigator.clipboard.writeText(shareLink.value);
