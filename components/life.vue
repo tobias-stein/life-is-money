@@ -235,24 +235,6 @@
 				const year = dataPointIndex;
 				const rate_user = w.config.series[0].data[dataPointIndex].y;
 				const [rate_lower, rate_upper] = w.config.series[1].data[dataPointIndex].y;
-				
-				
-				function find_closest_hrate(founds: Map<number, Map<number, number>>) : Map<number, number>
-				{
-					const rates 		= [...founds.keys()];
-					let closest_rate 	= rates[0] || 0;
-
-					for(let i = 1; i 	< rates.length; i++) 
-					{
-						const this_rate = rates[i] || 0;
-						const diff_a 	= Math.abs(closest_rate - this_chart_cursor_pos.y);
-						const diff_b 	= Math.abs(this_rate - this_chart_cursor_pos.y);
-
-						closest_rate	= (diff_a < diff_b) ? closest_rate : this_rate;
-					}
-
-					return founds.get(closest_rate)!;
-				}
 
 				clearTimeout(updateFoundsChart);
 				updateFoundsChart = setTimeout(() => 
@@ -260,37 +242,7 @@
 					if(this_chart_cursor_pos.x !== last_chart_cursor_pos.x)
 					{
 						last_chart_cursor_pos.x = this_chart_cursor_pos.x;
-
-						const rate_founds 		= sim_data.value.user.founds.get(rate_user);
-						const rate_founds_upper = sim_data.value.best.founds.get(rate_lower);
-						const rate_founds_lower = sim_data.value.worst.founds.get(rate_upper);
-						
-						if(rate_founds !== undefined && rate_founds_lower !== undefined && rate_founds_upper !== undefined)
-						{
-							foundChart.value.chart.updateOptions(
-							{
-								series: 
-								[
-									{ name: 'Founds', type: 'line', data: [...rate_founds.keys()].map(y => { return { x: y, y: rate_founds.get(y) }; }) },
-									{ 
-										name: 'Founds Confidence', 
-										type: 'rangeArea', 
-										data: [...rate_founds.keys()]
-											.map(y => 
-											{ 
-												return { 
-													x: y, 
-													y: [
-														Math.min(rate_founds_lower.get(y)!, rate_founds_upper.get(y)!, rate_founds.get(y)!),
-														Math.max(rate_founds_lower.get(y)!, rate_founds_upper.get(y)!, rate_founds.get(y)!),
-													]
-												}; 
-											}) 
-									}
-								],
-								xaxis: { min: w.globals.minX, max: w.globals.maxX }
-							});
-						}
+						updateFoundChart(year);
 					}
 				}, 200);
 				
@@ -318,6 +270,42 @@
 		}
 	};
 
+	function updateFoundChart(year: number)
+	{
+		const rate_user = hrateChart.value.chart.w.config.series[0].data[year].y;
+		const [rate_lower, rate_upper] = hrateChart.value.chart.w.config.series[1].data[year].y;
+
+		const rate_founds 		= sim_data.value.user.founds.get(rate_user);
+		const rate_founds_upper = sim_data.value.best.founds.get(rate_lower);
+		const rate_founds_lower = sim_data.value.worst.founds.get(rate_upper);
+		
+		if(rate_founds !== undefined && rate_founds_lower !== undefined && rate_founds_upper !== undefined)
+		{
+			foundChart.value.chart.updateOptions(
+			{
+				series: 
+				[
+					{ name: 'Founds', type: 'line', data: [...rate_founds.keys()].map(y => { return { x: y, y: rate_founds.get(y) }; }) },
+					{ 
+						name: 'Founds Confidence', 
+						type: 'rangeArea', 
+						data: [...rate_founds.keys()]
+							.map(y => 
+							{ 
+								return { 
+									x: y, 
+									y: [
+										Math.min(rate_founds_lower.get(y)!, rate_founds_upper.get(y)!, rate_founds.get(y)!),
+										Math.max(rate_founds_lower.get(y)!, rate_founds_upper.get(y)!, rate_founds.get(y)!),
+									]
+								}; 
+							}) 
+					}
+				],
+				xaxis: { min: hrateChart.value.chart.w.globals.minX, max: hrateChart.value.chart.w.globals.maxX }
+			});
+		}
+	}
 
 	function updateChartData(data: TSimData)
 	{
@@ -349,8 +337,6 @@
 		// series 4
 		series.push({ name: 'IF Confidence', type: 'rangeArea', data: toXY(data['worst'].fail_values).map(xy => { return { x: xy.x, y: [0.0, xy.y] }; }) });
 
-		founds.push({ name: 'Founds', type: 'line', data: [...Array(store.founding_period).keys()].map(y => { return { x: y, y: 0 }; }) });
-
 		foundChartOptions.yaxis.max = Math.max(data.user.total_founds_max, data.worst.total_founds_max, data.best.total_founds_max);
 		hrateChartOptions.yaxis.max = quantile([...data['user'].fi_values.values()], 0.9);
 		hrateChartOptions.xaxis.max = store.founding_period;
@@ -359,10 +345,17 @@
 			icon: '<i class="mdi-fit-to-screen mdi v-icon notranslate v-theme--light v-icon--size-x-small" aria-hidden="true" style="transform: translateY(-2px);" />',
 			index: 1,
 			title: 'Reset zoom',
-			click: () => { updateChart.value++; }
+			click: () => 
+			{ 
+				setTimeout(() => updateFoundChart(Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2))));
+				updateChart.value++; 
+			}
 		}];
 
 		chartColumnHeight.value = `${Math.ceil(hrateChart.value.chart.w.globals.svgHeight)}px`;
+
+		setTimeout(() => updateFoundChart(Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2))));
+
 		// force redrawing of chart
 		updateChart.value++;
 	}
