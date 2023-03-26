@@ -6,7 +6,7 @@
 
       <v-card>
         <v-card-title class="d-flex justify-space-between pa-0">
-            <span class="pt-2 pl-10">Share your experience</span>
+            <span class="pt-2 pl-6">Share Your Experience</span>
             <v-btn color="primary" variant="text" icon @click="open=false"><v-icon x-large>mdi-close</v-icon></v-btn>
         </v-card-title>
         <v-divider />
@@ -24,12 +24,9 @@
 <script setup>
     import useDefaultStore from "@/stores";
     import QRCode from 'qrcode'
-	import { useDisplay } from "vuetify/lib/framework.mjs";
 
     const open = ref(false);
     const store = useDefaultStore();
-
-    const display = useDisplay();
 
     const qrCode = ref("");
     const shareLink = computed(() => `${window.location.origin}/share/?code=${store.share()}`);
