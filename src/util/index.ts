@@ -21,11 +21,11 @@ export function compactNumber(n: number): string
     return Intl.NumberFormat(navigator.language || "en", { notation: "compact", maximumFractionDigits: 2 }).format(n);
 }
 
-export function forecast_min_required_founds(min_monthly_expense: number, avg_anual_inflation: number, founding_period_years: number) : number
+export function forecast_min_required_founds(min_monthly_expense: number, avg_annual_inflation: number, founding_period_years: number) : number
 {
-    const min_anual_expense = min_monthly_expense * 12;
+    const min_annual_expense = min_monthly_expense * 12;
 
     const years = [...Array(founding_period_years).keys()];
 
-    return years.map(year => min_anual_expense * Math.pow(1.0 + avg_anual_inflation, year)).reduce((sum, expense) => sum += expense, 0.0);
+    return years.map(year => min_annual_expense * Math.pow(1.0 + avg_annual_inflation, year)).reduce((sum, expense) => sum += expense, 0.0);
 }

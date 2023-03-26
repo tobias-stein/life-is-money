@@ -10,25 +10,25 @@ function pay_taxes(brutto_amount: number, tax_rate: number): number
 
 function calculate_invest_retruns(invest_amount: number, return_rate: number): number { return Math.max(0.0, invest_amount) * return_rate; }
 
-function forecast_inflation_rate(avg_anual_inflation_rate: number, num_years: number): number { return Math.pow(1.0 + avg_anual_inflation_rate, num_years); }
+function forecast_inflation_rate(avg_annual_inflation_rate: number, num_years: number): number { return Math.pow(1.0 + avg_annual_inflation_rate, num_years); }
 
 export type HourRate                = number;
 export type Year                    = number;
 
 export interface ISimulationInput 
 {
-    expected_min_anual_expenses:    number;
+    expected_min_annual_expenses:    number;
 
     founding_period_years:          Year;
 
-    anual_saving_rate:              number;
+    annual_saving_rate:              number;
     saving_risk_ratio:              number;
     
     income_tax:                     number;
     invest_tax:                     number;
 
-    avg_anual_inflation_rate:       number;  
-    avg_anual_invest_return:        number;
+    avg_annual_inflation_rate:       number;  
+    avg_annual_invest_return:        number;
 
     adj_hr_by_inflation:            boolean;
 
@@ -65,7 +65,7 @@ interface ISimulationFoundingPeriodOutput
 function clone<T>(input: T): T { return JSON.parse(JSON.stringify(input)); }
 
 
-const HR_TO_ANUAL = 8 /* business hours */ * 20 /* business days */ * 12 /* business month */; // 1920 business hours per year
+const HR_TO_annual = 8 /* business hours */ * 20 /* business days */ * 12 /* business month */; // 1920 business hours per year
 
 function simulate_founding_period(input: ISimulationInputInternal): ISimulationFoundingPeriodOutput
 {
@@ -79,21 +79,21 @@ function simulate_founding_period(input: ISimulationInputInternal): ISimulationF
 
     for(let year = sim_data.start_founding_year; year < sim_data.founding_period_years; year++)
     {
-        const inflation_year                        = forecast_inflation_rate(sim_data.avg_anual_inflation_rate, year);
+        const inflation_year                        = forecast_inflation_rate(sim_data.avg_annual_inflation_rate, year);
 
         // earn active income by work           
         if(financial_independence                   === undefined)         
         {           
-            const income_year                       = (sim_data.adj_hr_by_inflation ? sim_data.hour_rate * inflation_year : sim_data.hour_rate) * HR_TO_ANUAL;
+            const income_year                       = (sim_data.adj_hr_by_inflation ? sim_data.hour_rate * inflation_year : sim_data.hour_rate) * HR_TO_annual;
             total_founds                            += pay_taxes(income_year, sim_data.income_tax);
         }
 
         // earn passive income by investments
-        const invest_returns_year                   = calculate_invest_retruns(total_invest, sim_data.avg_anual_invest_return);
+        const invest_returns_year                   = calculate_invest_retruns(total_invest, sim_data.avg_annual_invest_return);
         total_founds                                += pay_taxes(invest_returns_year, sim_data.invest_tax);
 
-        // do anual spending on expenses            
-        const expenses_year                         = sim_data.expected_min_anual_expenses * inflation_year;
+        // do annual spending on expenses            
+        const expenses_year                         = sim_data.expected_min_annual_expenses * inflation_year;
         if(expenses_year                            > total_founds)
         {
             // since we do not have any more liquid founds, we have to use our investments
@@ -110,10 +110,10 @@ function simulate_founding_period(input: ISimulationInputInternal): ISimulationF
             total_founds                            -= expenses_year;
         }
 
-        if(sim_data.anual_saving_rate               > 0.0 && financial_independence === undefined)
+        if(sim_data.annual_saving_rate               > 0.0 && financial_independence === undefined)
         {
             // note: we only use the appropriate portion (relating to the risk ratio) of the intented saving rate value and put it into investments
-            const invest_year                       = sim_data.anual_saving_rate * sim_data.saving_risk_ratio;
+            const invest_year                       = sim_data.annual_saving_rate * sim_data.saving_risk_ratio;
 
             if(total_founds                         >= invest_year)
             {               

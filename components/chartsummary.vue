@@ -45,13 +45,13 @@
                             <td v-else><v-icon x-small>mdi-currency-usd-off</v-icon></td>
                         </tr>
                         <tr v-if="store.saving_risk_ratio > 0 && store.monthly_saving_rate > 0">
-                            <td>Avg. anual returns</td>
-                            <td>{{ (store.anual_average_invest_return * 100).toFixed(2) }}%</td>
+                            <td>Avg. annual returns</td>
+                            <td>{{ (store.annual_average_invest_return * 100).toFixed(2) }}%</td>
                         </tr>
                         
                         <tr>
-                            <td>Avg. anual inflation</td>
-                            <td>{{ (store.anual_average_inflation_rate * 100).toFixed(2) }}%</td>
+                            <td>Avg. annual inflation</td>
+                            <td>{{ (store.annual_average_inflation_rate * 100).toFixed(2) }}%</td>
                         </tr>
                         <tr>
                             <td>Inflation adjusted hour rate</td>
@@ -77,7 +77,7 @@
 
     const total_required_founds = computed(() => 
     {
-        return forecast_min_required_founds(store.minimum_monthly_expenses, store.anual_average_inflation_rate, store.founding_period);
+        return forecast_min_required_founds(store.minimum_monthly_expenses, store.annual_average_inflation_rate, store.founding_period);
     });
 
     const min_required_rate_user = computed(() => 

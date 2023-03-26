@@ -1,9 +1,9 @@
 <template>
     <div class="d-flex justify-center align-center">
         <v-card flat max-width="640px" class="text-justify">
-            <v-card-title>
-                <span>What is the expected average anual inflation rate?</span>
-            </v-card-title>
+            <div class="text-h6 ma-4">
+                <span>What is the average annual inflation rate?</span>
+            </div>
             <v-card-text>
                 Inflation refers to the general increase in prices of goods and services in an economy over time. 
                 Put simply, inflation means that the purchasing power of a unit of currency decreases over time. 
@@ -11,7 +11,7 @@
                 could have been bought for less in the past.
             </v-card-text>
             <v-card-actions>
-                <v-text-field v-model="anual_average_inflation_rate" type="number" suffix="%" label="Average anual inflation rate" variant="outlined" />
+                <v-text-field v-model="annual_average_inflation_rate" type="number" suffix="%" label="Average annual inflation rate" variant="outlined" />
             </v-card-actions>
             <v-card-text>
                 Usually wages increase in response to inflation. By checking this option it is assumed that the
@@ -29,9 +29,9 @@ import useDefaultStore from "@/stores"
 
 const store = useDefaultStore();
 
-const anual_average_inflation_rate = computed(
+const annual_average_inflation_rate = computed(
 {
-   get: function()         { return (store.anual_average_inflation_rate * 100); },
-   set: function(newValue) { store.anual_average_inflation_rate = newValue / 100; }
+   get: function()         { return (store.annual_average_inflation_rate * 100); },
+   set: function(newValue) { store.annual_average_inflation_rate = newValue / 100; }
 });
 </script>

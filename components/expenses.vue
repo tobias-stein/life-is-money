@@ -10,7 +10,7 @@
             <v-card-actions>
                 <v-text-field v-model="minimum_monthly_expenses" type="number" label="Monthly Expenses" variant="outlined" hide-details="">
                     <template v-slot:append>
-                        <v-switch v-model="annually" style="width: 120px;" color="primary" density="compact" class="mt-n2" hide-details inset :label="`${annually ? 'anually' : 'monthly'}`"/>
+                        <v-switch v-model="annually" style="width: 120px;" color="primary" density="compact" class="mt-n2" hide-details inset :label="`${annually ? 'annually' : 'monthly'}`"/>
                     </template>
                 </v-text-field>
             </v-card-actions>

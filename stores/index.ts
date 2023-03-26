@@ -29,8 +29,8 @@ export default defineStore("defualt",
         income_tax: 0.0,
         invest_tax: 0.0,
 
-        anual_average_invest_return: 0.07,
-        anual_average_inflation_rate: 0.02,
+        annual_average_invest_return: 0.07,
+        annual_average_inflation_rate: 0.02,
 
         inflation_adjusted_hour_rate: false,
 
@@ -46,9 +46,9 @@ export default defineStore("defualt",
 
     getters: 
     {
-        min_anual_expenses: (state) => { return state.minimum_monthly_expenses * 12.0; },
+        min_annual_expenses: (state) => { return state.minimum_monthly_expenses * 12.0; },
         founding_period: (state) => { return state.expected_age - state.current_age; },
-        anual_saving_rate: (state) => { return state.monthly_saving_rate * 12.0; },
+        annual_saving_rate: (state) => { return state.monthly_saving_rate * 12.0; },
         is_busy: (state) => { return state.simulation.is_running; },
         simulation_progress: (state) => { return (state.simulation.progress.reduce((acc, x) => acc += x ? x : 0, 0) / state.simulation.progress.length) * 100; }
     },
@@ -78,14 +78,14 @@ export default defineStore("defualt",
             ) : ISimulationInput =>
             {   
                 return {
-                    expected_min_anual_expenses:    this.min_anual_expenses,
+                    expected_min_annual_expenses:    this.min_annual_expenses,
                     founding_period_years:          this.founding_period,
-                    anual_saving_rate:              this.use_monthly_saving_plan ? this.anual_saving_rate : 0.0,
+                    annual_saving_rate:              this.use_monthly_saving_plan ? this.annual_saving_rate : 0.0,
                     saving_risk_ratio:              this.saving_risk_ratio,
                     income_tax:                     this.income_tax,
                     invest_tax:                     this.invest_tax,
-                    avg_anual_inflation_rate:       this.anual_average_inflation_rate * inflation_rate_multiplier, 
-                    avg_anual_invest_return:        this.anual_average_invest_return * investment_return_multiplier,
+                    avg_annual_inflation_rate:       this.annual_average_inflation_rate * inflation_rate_multiplier, 
+                    avg_annual_invest_return:        this.annual_average_invest_return * investment_return_multiplier,
                     adj_hr_by_inflation:            this.inflation_adjusted_hour_rate,
                     initial_founds:                 this.initial_founds,
                     initial_invest:                 this.initial_invest

@@ -34,7 +34,7 @@
                 Annual average investment returns refer to the average percentage increase or decrease in the value of an investment over a period of one year, including any dividends or interest earned during that time.
             </v-card-text>
             <v-card-actions>
-                <v-text-field v-model="anual_average_invest_return" type="number" suffix="%" label="Avg. annual investment returns" variant="outlined" hide-details />
+                <v-text-field v-model="annual_average_invest_return" type="number" suffix="%" label="Avg. annual investment returns" variant="outlined" hide-details />
             </v-card-actions>
 
             <v-card-text>
@@ -60,9 +60,9 @@ const invest_tax = computed(
    get: function()         { return store.invest_tax * 100; },
    set: function(newValue) { store.invest_tax = newValue / 100; }
 });
-const anual_average_invest_return = computed(
+const annual_average_invest_return = computed(
 {
-   get: function()         { return store.anual_average_invest_return * 100; },
-   set: function(newValue) { store.anual_average_invest_return = newValue / 100; }
+   get: function()         { return store.annual_average_invest_return * 100; },
+   set: function(newValue) { store.annual_average_invest_return = newValue / 100; }
 });
 </script>
