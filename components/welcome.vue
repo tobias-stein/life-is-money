@@ -1,10 +1,10 @@
 <template>
     <div class="d-flex justify-center align-center">
         <v-card flat max-width="640px" class="text-justify">
-            <v-card-title>Have you ever asked yourself:</v-card-title>
+            <div class="text-h6 ma-4">Have you ever asked yourself:</div>
             <v-carousel cycle interval="4000" hide-delimiter-background hide-delimiters :show-arrows="false" height="48px">
                 <v-carousel-item v-for="(question, i) in questions" :key="i">
-                    <p class="text-subtitle-2 mx-4" style="overflow-wrap: break-word; hyphens: auto; white-space: initial;">{{ question }}</p>
+                    <p class="text-secondary text-subtitle-2 mx-4" style="overflow-wrap: break-word; hyphens: auto; white-space: initial;">{{ question }}</p>
                 </v-carousel-item>
             </v-carousel>
             <v-card-text>
