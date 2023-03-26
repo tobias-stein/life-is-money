@@ -1,4 +1,5 @@
 <template>
+    {{ _code() }}
 </template>
 <script setup>
     import useDefaultStore from "@/stores";
@@ -13,6 +14,8 @@
     else 
     {
         store.load(code);
-        await navigateTo({ path: '/', query: { shared: true } });
+        //await navigateTo({ path: '/', query: { shared: true } });
     }
+
+    function _code() { return JSON.parse(atob(code)); }
 </script>
