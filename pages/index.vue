@@ -73,7 +73,7 @@
             onExit: async () => { },
         },
         {
-            name: "Expenses",
+            name: "Expenditures",
             desc: "",
             comp: resolveComponent('expenses'),
             onEnter: async () => { },
