@@ -24,7 +24,7 @@
                 <strong class="d-flex justify-center">{{ nofification.message }}</strong>
         </v-snackbar>
 
-        <v-window v-model="step">
+        <v-window v-model="step" disabled>
 
 
             <template v-for="(step, index) in steps">
