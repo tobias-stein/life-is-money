@@ -7,6 +7,8 @@ export default defineNuxtConfig({
 	app: 
 	{
 		baseURL: '/life-is-money/',
+		buildAssetsDir: 'nuxt',
+		rootId: 'nuxt',
 		head: {
 			title: "Life is Money",
 		},
