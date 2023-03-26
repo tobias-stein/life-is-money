@@ -1,28 +1,30 @@
 {
-  "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "worker": "tsc src/simulation.ts --outDir public/worker --lib esNext --target esNext"
-  },
-  "devDependencies": {
-    "nuxt": "^3.3.1",
-    "typescript": "^5.0.2"
-  },
-  "dependencies": {
-    "@mdi/font": "^7.2.96",
-    "@pinia/nuxt": "^0.4.7",
-    "apexcharts": "^3.37.1",
-    "pinia": "^2.0.33",
-    "qrcode": "^1.5.1",
-    "sass": "^1.59.3",
-    "vue3-apexcharts": "^1.4.1",
-    "vuetify": "^3.1.10"
-  },
-  "overrides": {
-    "vue": "latest"
-  }
+    "private": true,
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "worker": "tsc src/simulation.ts --outDir public/worker --lib esNext --target esNext",
+        "deploy": "push-dir --dir=.output/public --branch=gh-pages --cleanup"
+    },
+    "devDependencies": {
+        "nuxt": "^3.3.1",
+        "push-dir": "^0.4.1",
+        "typescript": "^5.0.2"
+    },
+    "dependencies": {
+        "@mdi/font": "^7.2.96",
+        "@pinia/nuxt": "^0.4.7",
+        "apexcharts": "^3.37.1",
+        "pinia": "^2.0.33",
+        "qrcode": "^1.5.1",
+        "sass": "^1.59.3",
+        "vue3-apexcharts": "^1.4.1",
+        "vuetify": "^3.1.10"
+    },
+    "overrides": {
+        "vue": "latest"
+    }
 }
