@@ -3,7 +3,7 @@
         <v-card-text class="ma-0 pa-2">
             
             <v-alert icon="mdi-sigma" title="Total required founds" variant="tonal" density="compact" border="start" border-color="secondary" class="mb-2">
-                The total amount of funds required to sustain the specified duration of <strong>{{ store.founding_period }}</strong> years is <strong class="text-secondary">{{ compactNumber(total_required_founds) }}</strong>, which has been adjusted to account for the inflation rate over time.
+                The total amount of funds required to sustain a period of <strong>{{ store.founding_period }}</strong> years with monthly expenditures of <strong>{{ compactNumber(store.minimum_monthly_expenses) }}</strong> (<strong>{{ compactNumber(store.min_annual_expenses) }}</strong> annually) is <strong class="text-secondary">{{ compactNumber(total_required_founds) }}</strong>, which has been adjusted to account for the inflation rate over time.
             </v-alert>
 
             <v-alert icon="mdi-flag-triangle" title="Financial Independence"  variant="tonal" density="compact" border="start" border-color="primary" class="mb-2">
@@ -35,12 +35,21 @@
                         <tr>
                             <td>Saving strategy</td>
                             <td v-if="store.use_monthly_saving_plan">
-                                <v-icon x-small>mdi-cash-multiple</v-icon>
-                                {{ compactNumber(store.monthly_saving_rate) }}
-                                <v-icon x-small>mdi-menu-right</v-icon>
-                                <span><v-icon x-small>mdi-piggy-bank-outline</v-icon>{{ compactNumber(store.monthly_saving_rate * (1.0 - store.saving_risk_ratio)) }}</span>
-                                +
-                                <span><v-icon x-small>mdi-bank-outline</v-icon>{{ compactNumber(store.monthly_saving_rate * store.saving_risk_ratio) }}</span>
+                                <v-row no-gutters class="d-flex justify-start align-center">
+                                    <v-col cols="12">
+                                        <v-icon x-small>mdi-cash-multiple</v-icon>
+                                        {{ compactNumber(store.monthly_saving_rate) }}
+                                        <v-icon x-small>mdi-menu-right</v-icon>
+                                    </v-col>
+                                    <v-col>
+                                        <v-icon x-small>mdi-piggy-bank-outline</v-icon>
+                                        {{ compactNumber(store.monthly_saving_rate * (1.0 - store.saving_risk_ratio)) }}
+                                    </v-col>
+                                    <v-col>
+                                        <v-icon x-small>mdi-bank-outline</v-icon>
+                                        {{ compactNumber(store.monthly_saving_rate * store.saving_risk_ratio) }}
+                                    </v-col>
+                                </v-row>
                             </td>
                             <td v-else><v-icon x-small>mdi-currency-usd-off</v-icon></td>
                         </tr>
@@ -54,9 +63,17 @@
                             <td>{{ (store.annual_average_inflation_rate * 100).toFixed(2) }}%</td>
                         </tr>
                         <tr>
+                            <td>Income tax</td>
+                            <td>{{ (store.income_tax * 100).toFixed(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Investment tax</td>
+                            <td>{{ (store.invest_tax * 100).toFixed(2) }}%</td>
+                        </tr>
+                        <!-- <tr>
                             <td>Inflation adjusted hour rate</td>
                             <td>{{ store.inflation_adjusted_hour_rate ? 'Yes' : 'No' }}</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </v-table>
             </v-alert>
