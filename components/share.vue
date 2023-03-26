@@ -29,10 +29,11 @@
     const store = useDefaultStore();
 
     const qrCode = ref("");
-    const shareLink = computed(() => `${window.location.origin + window.location.pathname}share/?code=${store.share()}`);
+
+    const generate_share_link = () => `${window.location.origin + window.location.pathname}share/?code=${store.share()}`;
     function copyShareLink()
     {
-        navigator.clipboard.writeText(shareLink.value);
+        navigator.clipboard.writeText(generate_share_link());
         store.show_notification("Share link copied.");
         open.value = false;
     }
@@ -45,7 +46,7 @@
 
     try
     {
-        qrCode.value = await QRCode.toDataURL(shareLink.value);
+        qrCode.value = await QRCode.toDataURL(generate_share_link());
     }
     catch(err) 
     {
