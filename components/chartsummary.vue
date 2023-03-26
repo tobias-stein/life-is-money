@@ -33,6 +33,14 @@
                             <td>{{ store.founding_period }} years</td>
                         </tr>
                         <tr>
+                            <td>Initial savings</td>
+                            <td>{{ (store.initial_founds).toFixed(2) }}</td>
+                        </tr>
+                        <tr>
+                            <td>Initial investments</td>
+                            <td>{{ (store.initial_invest).toFixed(2) }}</td>
+                        </tr>
+                        <tr>
                             <td>Saving strategy</td>
                             <td v-if="store.use_monthly_saving_plan">
                                 <v-row no-gutters class="d-flex justify-start align-center">
