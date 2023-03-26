@@ -4,12 +4,9 @@ export default defineNuxtConfig({
 	target: 'static',
 	ssr: false,
 
-	router: {
-		base: '/life-is-money/'
-	},
-
 	app: 
 	{
+		baseURL: '/life-is-money/',
 		head: {
 			title: "Life is Money",
 		},

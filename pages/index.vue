@@ -156,7 +156,8 @@
         if(shared)
         {
             // remove '?shared=true' query from url
-            window.history.replaceState({}, "Life is Money", window.location.origin);
+            
+            window.history.replaceState({}, "Life is Money", window.location.origin + window.location.pathname);
 
             // go to final window
             step.value = steps.length - 1;
