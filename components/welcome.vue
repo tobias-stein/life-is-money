@@ -38,6 +38,7 @@
         "How much money do I need to retire early?",
         "How long do I have to work?",
         "What is the minimum required hour rate to reach my financial independence in X years?",
-        "Is the amount of Y per hour enough to support my monthly expenses for Z years?"
+        "Is an hourly rate of Y enough to support my monthly expenses for Z years?",
+        "What hourly rate do I need to earn to pay off my debt within my desired timeframe?"
     ])
 </script>
