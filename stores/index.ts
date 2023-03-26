@@ -21,8 +21,9 @@ export default defineStore("defualt",
         initial_founds: 0.0,
         initial_invest: 0.0,
         
-        monthly_saving_rate: 0.0,
-        saving_risk_ratio: 0.0,
+        use_monthly_saving_plan: true,
+        monthly_saving_rate: 300.0,
+        saving_risk_ratio: 0.5,
 
         // taxes
         income_tax: 0.0,
@@ -79,7 +80,7 @@ export default defineStore("defualt",
                 return {
                     expected_min_anual_expenses:    this.min_anual_expenses,
                     founding_period_years:          this.founding_period,
-                    anual_saving_rate:              this.anual_saving_rate,
+                    anual_saving_rate:              this.use_monthly_saving_plan ? this.anual_saving_rate : 0.0,
                     saving_risk_ratio:              this.saving_risk_ratio,
                     income_tax:                     this.income_tax,
                     invest_tax:                     this.invest_tax,

@@ -34,7 +34,7 @@
                         </tr>
                         <tr>
                             <td>Saving strategy</td>
-                            <td v-if="store.monthly_saving_rate > 0">
+                            <td v-if="store.use_monthly_saving_plan">
                                 <v-icon x-small>mdi-cash-multiple</v-icon>
                                 {{ compactNumber(store.monthly_saving_rate) }}
                                 <v-icon x-small>mdi-menu-right</v-icon>
