@@ -6,8 +6,8 @@
 
       <v-card max-width="640px">
         <v-card-title class="d-flex justify-space-between pa-0">
-            <span class="pt-2 pl-6">Feeling generous?</span>
-            <v-btn color="primary" variant="text" width="170" tile icon @click="open=false">Not today <v-icon x-large>mdi-close</v-icon></v-btn>
+            <span class=" pl-6">Feeling generous?</span>
+            <v-btn color="primary" variant="text" @click="open=false">Not today <v-icon x-large>mdi-close</v-icon></v-btn>
         </v-card-title>
         <v-divider />
         <v-card-text class="text-justify">
