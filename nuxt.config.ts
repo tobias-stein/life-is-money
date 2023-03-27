@@ -11,6 +11,14 @@ export default defineNuxtConfig({
 		rootId: 'nuxt',
 		head: {
 			title: "Life is Money",
+			meta: [
+				{ hid: 'og-type', property: 'og:type', content: 'website' },
+				{ hid: 'og-title', property: 'og:title', content: 'Life is Money' },
+				{ hid: 'og-desc', property: 'og:description', content: 'Have you ever wondered how much money you need to live you life?' },
+				{ hid: 'og-url', property: 'og:url', content: 'https://tobias-stein.github.io/life-is-money/' },
+				
+				{ hid: 't-type', name: 'twitter:card', content: 'summary_large_image' },
+			]
 		},
 	},
 	css: [
