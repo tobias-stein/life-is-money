@@ -4,8 +4,10 @@
     </v-btn>
 </template>
 <script setup>
+    import useDefaultStore from "@/stores";
     import { useTheme } from 'vuetify/lib/framework.mjs';
 
+    const store = useDefaultStore();
     const theme = useTheme();
     function toggleTheme() 
     {

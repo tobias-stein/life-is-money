@@ -70,6 +70,7 @@
 	const chartColumnWidth = computed(() => display.width.value > display.height.value ? 6 : 12);
 
 	const theme = useTheme();
+	watch(theme.global.name, () => () => updateChart.value++);
 
 	let founds: any[] = [];
 	let series: any[] = [];
@@ -91,7 +92,7 @@
 			},
 			toolbar: { show: false }
 		},
-		theme: { mode: theme.current.value.dark ? 'dark' : 'light' },
+		theme: { mode: theme.global.current.value.dark ? 'light' : 'dark' },
 		colors: [
 			`${theme.current.value.colors.secondary}60`,
 			`${theme.current.value.colors.secondary}20`,
@@ -172,7 +173,7 @@
 				}
 			}
 		},
-		theme: { mode: theme.current.value.dark ? 'dark' : 'light' },
+		theme: { mode: theme.global.current.value.dark ? 'light' : 'dark' },
 		colors: [
 			theme.current.value.colors.primary,
 			`${theme.current.value.colors.primary}20`,
