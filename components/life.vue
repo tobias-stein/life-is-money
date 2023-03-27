@@ -70,7 +70,12 @@
 	const chartColumnWidth = computed(() => display.width.value > display.height.value ? 6 : 12);
 
 	const theme = useTheme();
-	watch(theme.global.name, () => () => updateChart.value++);
+	watch(theme.global.name, () => 
+	{
+		hrateChartOptions.chart.foreColor = theme.global.current.value.colors["on-background"];
+		updateChart.value++;
+	});
+
 	let founds: any[] = [];
 	let series: any[] = [];
 	let this_chart_cursor_pos = { x: 0, y: 0 };
@@ -84,6 +89,7 @@
 		{
 			type: 'rangeArea',
 			background: 'transparent',
+			foreColor: theme.global.current.value.colors["on-background"],
 			animations:
 			{
 				enabled: true,
@@ -145,6 +151,7 @@
 		{
 			type: 'rangeArea',
 			background: 'transparent',
+			foreColor: theme.global.current.value.colors["on-background"],
 			animations:
 			{
 				enabled: true,
@@ -340,6 +347,7 @@
 		foundChartOptions.yaxis.max = Math.max(data.user.total_founds_max, data.worst.total_founds_max, data.best.total_founds_max);
 		hrateChartOptions.yaxis.max = quantile([...data['user'].fi_values.values()], 0.9);
 		hrateChartOptions.xaxis.max = store.founding_period;
+
 		// hrateChartOptions.chart.toolbar.tools.customIcons = [
 		// {
 		// 	icon: '<i class="mdi-fit-to-screen mdi v-icon notranslate v-theme--light v-icon--size-x-small" aria-hidden="true" style="transform: translateY(-2px);" />',
