@@ -18,8 +18,13 @@
             </v-card-text>
 
             <v-card-text>
-                <v-alert variant="tonal" color="info" icon="mdi-test-tube" title="How results are created">
-                    TODO!
+                <v-alert variant="tonal" color="primary" icon="mdi-flag-checkered" title="The Goal">
+                    The primary objective of this website is to provide you with a brief overview of the minimum hourly rate necessary to sustain your monthly expenditures for a given period of years, while also demonstrating the timeframes involved in achieving financial independence by earning above the minimum hourly rate. 
+                </v-alert>
+            </v-card-text>
+            <v-card-text>
+                <v-alert variant="tonal" color="secondary" icon="mdi-test-tube" title="How does it work?">
+                    To determine the minimum hourly rate required and potential early financial independence, input variables such as monthly expenditures, savings, inflation rate, and taxes must be provided. Simulations with increasing hourly rates will be conducted to show their impact on the point of financial independence. Confidence intervals for favorable and unfavorable outcomes will also be generated.  It is assumed that for all simulations, upon reaching financial independence, no further income will be earned and no additional savings or investments will be made, resulting in the gradual depletion of current accumulated funds, leaving zero remaining funds at the conclusion of the total funding period.
                 </v-alert>
             </v-card-text>
             
