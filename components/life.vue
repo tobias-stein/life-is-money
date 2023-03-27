@@ -71,7 +71,6 @@
 
 	const theme = useTheme();
 	watch(theme.global.name, () => () => updateChart.value++);
-
 	let founds: any[] = [];
 	let series: any[] = [];
 	let this_chart_cursor_pos = { x: 0, y: 0 };
@@ -251,7 +250,7 @@
 				const summary = 
 					'<div style="position: relative; overflow: visible;">'
 						+ '<div class="summary_tooltip">'
-							+ `<p>Financial independence can be reached in <strong>${year} years</strong> with an hour rate of <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user)}</strong>.</p>`
+							+ `<p style="color: ${theme.global.current.value.colors["on-background"]}; background: ${theme.global.current.value.colors["background"]};">Financial independence can be reached in <strong>${year} years</strong> with an hour rate of <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user)}</strong>.</p>`
 						+ '<div>';
 					+ '<div>';
 
