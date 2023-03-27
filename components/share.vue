@@ -14,9 +14,9 @@
             <v-img width="auto" :src="qrCode" style="left: 50%; transform: translateX(-50%);"/>
         </v-card-text>
         <v-card-actions class="d-flex justify-center">
-            <v-btn color="primary" variant="outlined" @click="copyQRCode">Copy<v-icon x-large class="ml-2">mdi-qrcode</v-icon></v-btn>
+            <v-btn color="primary" variant="outlined" @click="copyQRCode()">Copy<v-icon x-large class="ml-2">mdi-qrcode</v-icon></v-btn>
             <span class="text-button ml-2">or</span>
-            <v-btn color="primary" variant="outlined" @click="copyShareLink">Copy<v-icon x-large class="ml-2">mdi-link</v-icon></v-btn>
+            <v-btn color="primary" variant="outlined" @click="copyShareLink()">Copy<v-icon x-large class="ml-2">mdi-link</v-icon></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -37,6 +37,7 @@
         store.show_notification("Share link copied.");
         open.value = false;
     }
+    
     function copyQRCode()
     {
         navigator.clipboard.writeText(qrCode.value);
@@ -44,13 +45,19 @@
         open.value = false;
     }
 
-    try
+    // alway generate the qr-code from latest values
+    watch(open, async (opened) => 
     {
-        qrCode.value = await QRCode.toDataURL(generate_share_link());
-    }
-    catch(err) 
-    {
-        console.error(err);
-    }
-    
+        if(opened)
+        {
+            try
+            {
+                qrCode.value = await QRCode.toDataURL(generate_share_link());
+            }
+            catch(err) 
+            {
+                console.error(err);
+            }
+        }
+    });
 </script>
