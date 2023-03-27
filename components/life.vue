@@ -255,9 +255,9 @@
 				
 
 				const summary = 
-					'<div style="position: relative; overflow: visible;">'
+					`<div style="position: relative; overflow: visible; color: ${theme.global.current.value.colors["on-background"]}; background: ${theme.global.current.value.colors["background"]};">`
 						+ '<div class="summary_tooltip">'
-							+ `<p style="color: ${theme.global.current.value.colors["on-background"]}; background: ${theme.global.current.value.colors["background"]};">Financial independence can be reached in <strong>${year} years</strong> with an hour rate of <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user)}</strong>.</p>`
+							+ `<p>Financial independence can be reached in <strong>${year} years</strong> with<br><strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user)}</strong>hour / <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user * 8 * 20)}</strong>month / <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user * 8 * 20 * 12)}</strong>year</p>`
 						+ '<div>';
 					+ '<div>';
 
@@ -371,10 +371,10 @@
 <style>
 .summary_tooltip {
 
-	width: 265px;
+	width: 370px;
 
 	margin: 0px; 
-	padding: 0px; 
+	padding: 4px; 
 
 	overflow-wrap: break-word;
 	hyphens: auto; 
