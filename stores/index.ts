@@ -5,6 +5,8 @@ import {
 } from "@/src/simulation";
 
 
+let printing = false;
+
 export default defineStore("defualt", 
 {
     state: () => (
@@ -50,11 +52,25 @@ export default defineStore("defualt",
         founding_period: (state) => { return state.expected_age - state.current_age; },
         annual_saving_rate: (state) => { return state.monthly_saving_rate * 12.0; },
         is_busy: (state) => { return state.simulation.is_running; },
-        simulation_progress: (state) => { return (state.simulation.progress.reduce((acc, x) => acc += x ? x : 0, 0) / state.simulation.progress.length) * 100; }
+        simulation_progress: (state) => { return (state.simulation.progress.reduce((acc, x) => acc += x ? x : 0, 0) / state.simulation.progress.length) * 100; },
+    
+        is_printing: (state) => { return printing; }
     },
 
     actions: 
     {
+        async print_report() 
+        {
+            printing = true;
+            
+            nextTick(() => 
+            {
+                window.print();
+                printing = false;
+                this.show_notification("Downloaded simulation report.");
+            });
+        },
+
         async show_notification(message: string): Promise<void> { /** dummy action that will be listened to from the index page. */ },
 
         async show_donation(): Promise<void> { /** dummy action that will be listened to from the donation component. */ },

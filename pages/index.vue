@@ -1,14 +1,13 @@
 <template>
-    <v-app-bar>
+    <v-app-bar class="no-print">
             <v-app-bar-title><span v-if="step > 0">{{ step }}. </span>{{ thisStepName }}</v-app-bar-title>
             <!--  step progress-->
             <template v-slot:extension>
                 <v-progress-linear :model-value="(step / (steps.length - 1)) * 100" color="primary" height="6" />
             </template>
         <template v-slot:append>
-            <theme />
             <donation />
-            <share />
+            <theme />
         </template>
     </v-app-bar>
     <v-card flat>
@@ -19,13 +18,12 @@
             :timeout="2000" 
             color="primary" 
             location="bottom"             
+            class="no-print"
             style="transform: translateY(-52px);">
                 <strong class="d-flex justify-center">{{ nofification.message }}</strong>
         </v-snackbar>
 
         <v-window v-model="step" disabled>
-
-
             <template v-for="(step, index) in steps">
                 <v-window-item :value="index">
                     <component :is="step.comp"></component>
@@ -33,21 +31,25 @@
             </template>
         </v-window>
     </v-card>
-    <v-footer app>
+    <v-footer app class="no-print">
 
-        <v-btn v-if="step > 1 && step < steps.length - 2" :disabled="store.is_busy" variant="text" @click="step--">
+        <v-btn v-if="step > 1 && step < steps.length - 1" :disabled="store.is_busy" class="mx-0 px-0" variant="text" @click="step--">
             <v-icon>mdi-chevron-left</v-icon>
             {{ prevStepLabel }}
         </v-btn>
+        <template v-else-if="step === steps.length - 1">
+            <v-btn v-if="!store.is_busy" icon variant="text" @click="store.print_report"><v-icon>mdi-download</v-icon></v-btn>
+            <share />
+        </template>
 
         <v-spacer></v-spacer>
 
-        <v-btn v-if="step < steps.length - 1" :disabled="store.is_busy" color="primary" variant="text" @click="step++">
+        <v-btn v-if="step < steps.length - 1" :disabled="store.is_busy" class="mx-0 px-0" color="primary" variant="text" @click="step++">
             {{ nextStepLabel }}
             <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
-        <v-btn v-else variant="flat" :disabled="store.is_busy" @click="startNewSimulation">
-            Start a new simulation.
+        <v-btn v-else variant="flat" class="mx-0 px-0" :disabled="store.is_busy" @click="startNewSimulation">
+            Start new simulation.
         </v-btn>
     </v-footer>
 </template>
@@ -86,14 +88,14 @@
             onExit: async () => { },
         },
         {
-            name: "Savings & Investments",
+            name: "Savings",
             desc: "",
             comp: resolveComponent('savings'),
             onEnter: async () => { },
             onExit: async () => { },
         },
         {
-            name: "Taxes & Returns",
+            name: "Taxes",
             desc: "",
             comp: resolveComponent('taxes'),
             onEnter: async () => { },
@@ -173,5 +175,11 @@
 <style>
 .v-toolbar__extension {
   height: 6px !important;
+}
+
+@media print {
+    .no-print { 
+        display: none; 
+    }
 }
 </style>
