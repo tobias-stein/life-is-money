@@ -8,17 +8,19 @@
                 Expenditures refer to the money spent on goods and services. It encompasses all financial transactions, including purchases, investments, and payments made for various expenses, such as rent, utilities, food, transportation, taxes, and other essentials or discretionary items.
             </v-card-text>
             <v-card-actions>
-                <v-text-field v-model="minimum_monthly_expenses" :label="`${ annually ? 'Yearly' : 'Monthly' } expenditures`" variant="outlined" hide-details @update:focused="(value) => focused=value">
+                <v-text-field v-model="minimum_monthly_expenses" :label="`${ annually ? 'Yearly' : 'Monthly' } expenditures`" :type="focused ? 'number' : 'text'" variant="outlined" hide-details @update:focused="(value) => focused=value">
                     <template v-slot:append>
                         <v-switch v-model="annually" style="width: 120px;" color="primary" density="compact" class="mt-n2" hide-details inset :label="`${annually ? 'annually' : 'monthly'}`"/>
                     </template>
                 </v-text-field>
             </v-card-actions>
-            <v-card-actions>
-                <v-alert icon="mdi-currency-usd" title="Expenditures change" append-inner="Years" variant="tonal" border="start" border-color="primary">
-                    {{ annually ? 'Yearly' : 'Monthly' }} expenditures are subject to change depending on one's current life situation, such as the purchase of property, having dependents, and other factors. Moreover, it is generally observed that expenses tend to decrease with age. For the purpose of calculation, we will consider this as your average {{ annually ? 'yearly' : 'monthly' }} expenses. 
-                </v-alert>
-            </v-card-actions>
+
+            <collapsable 
+                title="Expenditures Change" 
+                :text=expenditures_change_text 
+                color="primary" 
+                icon="mdi-currency-usd" 
+            />        
         </v-card>
     </div>
 </template>
@@ -43,4 +45,8 @@
         }
     });
 
+    const expenditures_change_text = computed(() => 
+    {
+        return `${annually.value ? 'Yearly' : 'Monthly'} expenditures are subject to change depending on one's current life situation, such as the purchase of property, having dependents, and other factors. Moreover, it is generally observed that expenses tend to decrease with age. For the purpose of calculation, we will consider this as your average ${annually.value ? 'yearly' : 'monthly'} expenses.`;
+    });
 </script>

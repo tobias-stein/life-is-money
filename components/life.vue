@@ -1,6 +1,6 @@
 <template>
 	<!-- loading/progress indicator -->
-	<v-container v-if="store.is_busy">
+	<v-container v-if="store.is_busy" class="no-print">
 		<v-row class="fill-height" align-content="center" justify="center">
 			<v-col class="text-subtitle-1 text-center" cols="12">
 				Preparing data ...
@@ -15,16 +15,16 @@
 	</v-container>
 
 	<!-- chart & summary -->
-	<v-row v-else :key="updateChart">
-		<v-col :cols="chartColumnWidth" :style="`height: ${chartColumnHeight};`">
+	<v-row v-else :key="updateChart" :class="`print-full-width flex-${(display.width.value > display.height.value) ? 6 : 12}`">
+		<v-col class="print-pagebreak" :style="`height: ${chartColumnHeight};`">
 			<!-- budget -->
 			<apexchart :options="foundChartOptions" :series="founds" width="100%" ref="foundChart" />
 			<!-- year-hour-rate -->
 			<apexchart :options="hrateChartOptions" :series="series" width="100%" ref="hrateChart" style="transform: translateY(-100%);" />
 		</v-col>
 		<v-col>
-			<div class="d-flex justify-center align-center">
-        		<v-card flat max-width="640px">
+			<div v-if="!store.is_printing" class="d-flex justify-center align-center">
+        		<v-card flat max-width="640px" class="no-print">
 					<v-tabs v-model="openReportTab" color="primary" fixed-tabs grow density="compact">
 						<v-tab value="summary">Summary</v-tab>
 						<v-tab value="info">Chart Info</v-tab>
@@ -38,6 +38,10 @@
 						</v-window-item>
 					</v-window>
 				</v-card>
+			</div>
+			<div class="when-print">
+				<chartsummary :sim_data="sim_data" class="print-pagebreak" />
+				<chartinfo />
 			</div>
 		</v-col>
 	</v-row>
@@ -66,8 +70,6 @@
 	const updateChart = ref(0);
 	const display = useDisplay();
 	const sim_data = ref({} as TSimData);
-
-	const chartColumnWidth = computed(() => display.width.value > display.height.value ? 6 : 12);
 
 	const theme = useTheme();
 	watch(theme.global.name, () => 
@@ -194,6 +196,9 @@
 			width: 2
 		},
 		legend: { show: false },
+		annotations: {
+			position: 'back'
+		},
 		xaxis:
 		{
 			type: 'numeric',
@@ -208,6 +213,10 @@
 					this_chart_cursor_pos.x = x_value; // !attention: this line is important as we fetch the current y-axis values here, that is used to update the 'foudns' chart
 					return x_value === 0 ? 'Today' : x_value.toFixed(0); 
 				}
+			},
+			tooltip: 
+			{
+				offsetY: 5 
 			}
 		},
 		yaxis: 
@@ -215,7 +224,11 @@
 			min: 0.0,
 			max: 100.0,
 			crosshairs: { show: true },
-			tooltip: { enabled: true },
+			tooltip: 
+			{ 
+				enabled: false,
+				offsetX: -60
+			},
 			labels: 
 			{ 
 				minWidth: 80,
@@ -231,17 +244,36 @@
 		{
 			enabled: true,
 			shared: true,
+			marker: { show: false },
 			intersect: false,
 			fixed: 
 			{
 				enabled: true,
-				position: 'topRight',
+				position: 'topLeft',
+				offsetX: 90,
+				offsetY: 10
 			},
 			custom: function({ series, seriesIndex, dataPointIndex, w})
 			{
 				const year = dataPointIndex;
 				const rate_user = w.config.series[0].data[dataPointIndex].y;
-				const [rate_lower, rate_upper] = w.config.series[1].data[dataPointIndex].y;
+
+				// update FI marker
+				hrateChart.value.clearAnnotations();
+				hrateChart.value.addXaxisAnnotation({
+					x: year,
+					label: {
+						text: 'Financial Independence',
+						position: 'bottom',
+						offsetX: 22,
+						offsetY: -6,
+						style: {
+							color: theme.global.current.value.colors.primary,
+							background: theme.global.current.value.colors["background"],
+							fontSize: '14px',
+						}
+					},
+				});
 
 				clearTimeout(updateFoundsChart);
 				updateFoundsChart = setTimeout(() => 
@@ -257,13 +289,17 @@
 				const summary = 
 					`<div style="position: relative; overflow: visible; color: ${theme.global.current.value.colors["on-background"]}; background: ${theme.global.current.value.colors["background"]};">`
 						+ '<div class="summary_tooltip">'
-							+ `<p>Financial independence can be reached in <strong>${year} years</strong> with<br><strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user)}</strong>hour / <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user * 8 * 20)}</strong>month / <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user * 8 * 20 * 12)}</strong>year</p>`
+							+ `<p>Financial independence possible in <strong>${year} years</strong><br>with <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user)}</strong>hr / <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user * 8 * 20)}</strong>mo / <strong style="color: ${theme.current.value.colors.primary};">${compactNumber(rate_user * 8 * 20 * 12)}</strong>yr</p>`
 						+ '<div>';
 					+ '<div>';
 
 				return summary;
 			},
-			x: { formatter: function(x_value: number) { return `in ${x_value} years`; } }
+			x: 
+			{ 
+				formatter: function(x_value: number) { return `in ${x_value} years`; },
+
+			}
 		},
 		title: 
 		{
@@ -274,7 +310,8 @@
 		{
 			text: undefined,
 			margin: 0
-		}
+		},
+		markers: { shape: 'square' }
 	};
 
 	function updateFoundChart(year: number)
@@ -371,7 +408,7 @@
 <style>
 .summary_tooltip {
 
-	width: 370px;
+	width: 290px;
 
 	margin: 0px; 
 	padding: 4px; 
@@ -379,6 +416,29 @@
 	overflow-wrap: break-word;
 	hyphens: auto; 
 	white-space: initial;
-	text-align: right;
+	text-align: left;
+}
+
+.when-print {
+	display: none;
+}
+
+@media print {
+
+    .no-print { 
+		display: none; 
+	}
+
+	.when-print {
+		display: block;
+	}
+
+	.print-pagebreak { 
+        page-break-after: always;
+	}
+
+	.print-full-width {
+		flex-direction: column;
+	}
 }
 </style>

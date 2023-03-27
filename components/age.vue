@@ -22,11 +22,13 @@
                     <template v-slot:append-inner>Years</template>
                 </v-text-field>
             </v-card-actions>
-            <v-card-text>
-                <v-alert icon="mdi-calendar-clock-outline" title="Founding period length" append-inner="Years" variant="tonal" border="start" border-color="primary">
-                    Please note that a longer founding period will require a significantly larger amount of funds due to the impact of inflation on the cost of goods and services over time, leading to a greater founding requirement to maintain the same standard of living.
-                </v-alert>
-            </v-card-text>
+
+            <collapsable 
+                title="Founding Period Length" 
+                :text=founding_period_length_text 
+                color="primary" 
+                icon="mdi-calendar-clock-outline" 
+            />
         </v-card>
     </div>
 </template>
@@ -53,4 +55,6 @@
             store.expected_age = Math.min(Math.max(store.current_age + 1, store.expected_age), 121);
         }
     }
+
+    const founding_period_length_text = "Please note that a longer founding period will require a significantly larger amount of funds due to the impact of inflation on the cost of goods and services over time, leading to a greater founding requirement to maintain the same standard of living."
 </script>

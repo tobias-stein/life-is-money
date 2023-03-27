@@ -11,37 +11,37 @@
             </v-card-text>
 
             <v-card-actions>
-                <v-text-field v-model="income_tax" type="number" suffix="%" label="Your income tax" variant="outlined" hide-details @update:focused="(value) => focused_income=value" />
+                <v-text-field v-model="income_tax" type="number" suffix="%" label="Your income tax" variant="outlined" hide-details :type="focused_income ? 'number' : 'text'" @update:focused="(value) => focused_income=value" />
             </v-card-actions>
 
-            <v-card-text>
-                <v-alert icon="mdi-hand-coin-outline" append-inner="Years" variant="tonal" border="start" border-color="primary">
-                    The income tax rate typically increases as the amount of income earned increases. Income tax is usually withheld from an individual's paycheck by their employer or paid directly by the individual to the government.
-                </v-alert>
-            </v-card-text>
-
+            <collapsable 
+                title="Income Taxes" 
+                text="The income tax rate typically increases as the amount of income earned increases. Income tax is usually withheld from an individual's paycheck by their employer or paid directly by the individual to the government." 
+                color="primary" 
+                icon="mdi-hand-coin-outline" 
+            />
             <v-card-actions>
-                <v-text-field v-model="invest_tax" type="number" suffix="%" label="Your investment tax" variant="outlined" hide-details @update:focused="(value) => focused_invest=value"  />
+                <v-text-field v-model="invest_tax" type="number" suffix="%" label="Your investment tax" variant="outlined" hide-details :type="focused_invest ? 'number' : 'text'" @update:focused="(value) => focused_invest=value"  />
             </v-card-actions>
 
-            <v-card-text>
-                <v-alert icon="mdi-hand-coin-outline" variant="tonal" border="start" border-color="primary">
-                    Investment taxes can be of different types such as capital gains tax, dividend tax or interest tax. The investment tax rate can vary depending on the type of investment and the length of time the investment was held.
-                </v-alert>
-            </v-card-text>
+            <collapsable 
+                title="Investment Taxes" 
+                text="Investment taxes can be of different types such as capital gains tax, dividend tax or interest tax. The investment tax rate can vary depending on the type of investment and the length of time the investment was held." 
+                color="primary" 
+                icon="mdi-hand-coin-outline" 
+            />
 
             <v-card-text>
                 Annual average investment returns refer to the average percentage increase or decrease in the value of an investment over a period of one year, including any dividends or interest earned during that time.
             </v-card-text>
             <v-card-actions>
-                <v-text-field v-model="annual_average_invest_return" type="number" suffix="%" label="Avg. annual investment returns" variant="outlined" hide-details @update:focused="(value) => focused_return=value" />
+                <v-text-field v-model="annual_average_invest_return" type="number" suffix="%" label="Avg. annual investment returns" variant="outlined" hide-details :type="focused_return ? 'number' : 'text'" @update:focused="(value) => focused_return=value" />
             </v-card-actions>
 
-            <v-card-text>
-                <v-alert icon="mdi-information-outline" variant="tonal" border="start" border-color="secondary">
-                    It is important to note that in order to accurately calculate taxes and returns, it is necessary to perform individual calculations for each income or investment. However, for the sake of simplicity, we will use the annual average.
-                </v-alert>
-            </v-card-text>
+            <collapsable 
+                title="Calculating Taxes & Returns" 
+                text="Investment taxes can be of different types such as capital gains tax, dividend tax or interest tax. The investment tax rate can vary depending on the type of investment and the length of time the investment was held." 
+            />
         </v-card>
    </div>
 </template>
