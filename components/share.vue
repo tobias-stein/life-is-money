@@ -5,15 +5,15 @@
       </template>
 
       <v-card>
-        <v-card-title class="d-flex justify-space-between pa-0">
-            <span class="pt-2 pl-6">Share Your Experience</span>
-            <v-btn color="primary" variant="text" icon @click="open=false"><v-icon x-large>mdi-close</v-icon></v-btn>
+        <v-card-title class="d-flex justify-space-between px-6">
+            <span>Share Your Experience</span>
+            <v-btn color="primary" class="px-0" variant="text" @click="open=false">Close <v-icon x-large>mdi-close</v-icon></v-btn>
         </v-card-title>
         <v-divider />
         <v-card-text class="text-center">
             <v-img width="auto" :src="qrCode" style="left: 50%; transform: translateX(-50%);"/>
         </v-card-text>
-        <v-card-actions class="d-flex justify-center">
+        <v-card-actions class="d-flex justify-center pb-4">
             <v-btn color="primary" variant="outlined" @click="copyQRCode()">Copy<v-icon x-large class="ml-2">mdi-qrcode</v-icon></v-btn>
             <span class="text-button ml-2">or</span>
             <v-btn color="primary" variant="outlined" @click="copyShareLink()">Copy<v-icon x-large class="ml-2">mdi-link</v-icon></v-btn>

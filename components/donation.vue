@@ -5,9 +5,9 @@
       </template>
 
       <v-card max-width="640px">
-        <v-card-title class="d-flex justify-space-between pa-0">
-            <span class=" pl-6">Feeling generous?</span>
-            <v-btn color="primary" variant="text" @click="open=false">Not today <v-icon x-large>mdi-close</v-icon></v-btn>
+        <v-card-title class="d-flex justify-space-between px-6">
+            <span>Feeling generous?</span>
+            <v-btn color="primary" class="px-0" variant="text" @click="open=false">Not today <v-icon x-large>mdi-close</v-icon></v-btn>
         </v-card-title>
         <v-divider />
         <v-card-text class="text-justify">
