@@ -2,19 +2,13 @@
     <div class="d-flex justify-center align-center">
         <v-card flat max-width="640px" class="text-justify">
             <div class="text-h6 ma-4">Have you ever asked yourself:</div>
-            <v-carousel cycle interval="4000" hide-delimiter-background hide-delimiters :show-arrows="false" height="48px">
+            <v-carousel cycle interval="6000" hide-delimiter-background hide-delimiters :show-arrows="false" height="48px">
                 <v-carousel-item v-for="(question, i) in questions" :key="i">
                     <p class="text-secondary text-subtitle-2 mx-4" style="overflow-wrap: break-word; hyphens: auto; white-space: initial;">{{ question }}</p>
                 </v-carousel-item>
             </v-carousel>
             <v-card-text>
                 By following this <strong>6-step</strong> guide you might be able to find your answers.
-            </v-card-text>
-            <v-card-text>
-                <v-alert variant="tonal" color="success" icon="mdi-cctv-off" title="Your data never leaves your device">
-                    This website has no backend and all data provided by you stays on your local device. No coockies, no data collection, no nothing. 
-                    In fact you can see for yourself and find this websites code right <a href="https://github.com/tobias-stein/life-is-money.git">here</a>.
-                </v-alert>
             </v-card-text>
 
             <v-card-text>
@@ -28,6 +22,13 @@
                 </v-alert>
             </v-card-text>
             
+            <v-card-text>
+                <v-alert variant="tonal" color="success" icon="mdi-cctv-off" title="Your data never leaves your device">
+                    This website has no backend and all data provided by you stays on your local device. No coockies, no data collection, no nothing. 
+                    In fact you can see for yourself and find this websites code right <a href="https://github.com/tobias-stein/life-is-money.git">here</a>.
+                </v-alert>
+            </v-card-text>
+
             <v-card-text>
                 <v-alert variant="tonal" color="warning" icon="mdi-alert-outline" title="Disclaimer">
                     I would like to emphasize that the results provided through this website are based on simple equations that may not accurately reflect real-world economic conditions. Furthermore, the far future is highly unpredictable, and factors such as capital returns and inflation rates are subject to significant volatility.
