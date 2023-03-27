@@ -1,11 +1,12 @@
 <template>
     <v-app-bar>
             <v-app-bar-title><span v-if="step > 0">{{ step }}. </span>{{ thisStepName }}</v-app-bar-title>
-            <!--  -->
+            <!--  step progress-->
             <template v-slot:extension>
                 <v-progress-linear :model-value="(step / (steps.length - 1)) * 100" color="primary" height="6" />
             </template>
         <template v-slot:append>
+            <theme />
             <donation />
             <share />
         </template>
@@ -17,9 +18,7 @@
             v-model="nofification.show" 
             :timeout="2000" 
             color="primary" 
-            variant="tonal" 
-            location="bottom" 
-            
+            location="bottom"             
             style="transform: translateY(-52px);">
                 <strong class="d-flex justify-center">{{ nofification.message }}</strong>
         </v-snackbar>
