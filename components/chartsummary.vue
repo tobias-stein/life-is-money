@@ -10,8 +10,14 @@
                 <v-table density="compact">
                     <tbody>
                         <tr v-for="item in [fi_quantile(0.05), fi_quantile(0.10), fi_quantile(0.20), fi_quantile(0.50)]" :key="item.year">
-                            <td>in <strong>{{ item.year }}</strong> years</td>
-                            <td>at a <strong>{{ compactNumber(item.rate || 0) }}</strong> hour rate</td>
+                            <td><strong>{{ item.year }}</strong> years</td>
+                            <td>
+                                <strong>{{ compactNumber(item.rate || 0) }}</strong> hr
+                                /
+                                <strong>{{ compactNumber((item.rate || 0) * 8 * 20) }}</strong> mo
+                                /
+                                <strong>{{ compactNumber((item.rate || 0) * 8 * 20 * 12) }}</strong> yr 
+                            </td>
                         </tr>
                     </tbody>
                 </v-table>
