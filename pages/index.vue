@@ -35,7 +35,7 @@
     </v-card>
     <v-footer app>
 
-        <v-btn v-if="step > 1" :disabled="store.is_busy" variant="text" @click="step--">
+        <v-btn v-if="step > 1 && step < steps.length - 2" :disabled="store.is_busy" variant="text" @click="step--">
             <v-icon>mdi-chevron-left</v-icon>
             {{ prevStepLabel }}
         </v-btn>
@@ -107,7 +107,7 @@
             onExit: async () => { },
         },
         {
-            name: "Life vs. Money",
+            name: "Simulation",
             desc: "",
             comp: resolveComponent('life'),
             onEnter: async () => {  await doSimulation(); },
