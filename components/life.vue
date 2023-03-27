@@ -152,13 +152,13 @@
 			},
 			zoom:
 			{
-				enabled: true,
+				enabled: false,
 				type: 'xy',
 				autoScaleYaxis: true,
 			},
 			toolbar:
 			{
-				show: true,
+				show: false,
 				tools:
 				{
 					download: true,
@@ -340,17 +340,17 @@
 		foundChartOptions.yaxis.max = Math.max(data.user.total_founds_max, data.worst.total_founds_max, data.best.total_founds_max);
 		hrateChartOptions.yaxis.max = quantile([...data['user'].fi_values.values()], 0.9);
 		hrateChartOptions.xaxis.max = store.founding_period;
-		hrateChartOptions.chart.toolbar.tools.customIcons = [
-		{
-			icon: '<i class="mdi-fit-to-screen mdi v-icon notranslate v-theme--light v-icon--size-x-small" aria-hidden="true" style="transform: translateY(-2px);" />',
-			index: 1,
-			title: 'Reset zoom',
-			click: () => 
-			{ 
-				setTimeout(() => updateFoundChart(Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2))));
-				updateChart.value++; 
-			}
-		}];
+		// hrateChartOptions.chart.toolbar.tools.customIcons = [
+		// {
+		// 	icon: '<i class="mdi-fit-to-screen mdi v-icon notranslate v-theme--light v-icon--size-x-small" aria-hidden="true" style="transform: translateY(-2px);" />',
+		// 	index: 1,
+		// 	title: 'Reset zoom',
+		// 	click: () => 
+		// 	{ 
+		// 		setTimeout(() => updateFoundChart(Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2))));
+		// 		updateChart.value++; 
+		// 	}
+		// }];
 
 		chartColumnHeight.value = `${Math.ceil(hrateChart.value.chart.w.globals.svgHeight)}px`;
 
