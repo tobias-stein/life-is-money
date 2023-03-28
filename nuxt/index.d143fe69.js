@@ -1,0 +1,1 @@
+import{B as o,D as u,E as n,G as c}from"./entry.3424c69e.js";import{u as _}from"./index.5ece8eb8.js";const m={__name:"index",async setup(d){let e,t;const r=_(),a=o(),{query:{code:s}}=a;if(s===void 0)throw u({statusCode:400,statusMessage:"No code provided!",fatal:!0});return r.load(s),[e,t]=n(()=>c({path:"/",query:{shared:!0}})),await e,t(),(i,p)=>null}};export{m as default};

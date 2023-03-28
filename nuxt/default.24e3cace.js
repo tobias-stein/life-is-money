@@ -1,0 +1,1 @@
+import{v as l,b as c,e,w as n,a as t,o as r,I as _}from"./entry.3424c69e.js";const p={};function d(o,f){const a=t("VMain"),s=t("VApp");return r(),c("div",null,[e(s,null,{default:n(()=>[e(a,null,{default:n(()=>[_(o.$slots,"default")]),_:3})]),_:3})])}const i=l(p,[["render",d]]);export{i as default};
