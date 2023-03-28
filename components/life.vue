@@ -15,36 +15,40 @@
 	</v-container>
 
 	<!-- chart & summary -->
-	<v-row v-else :key="updateChart" :class="`print-full-width`">
-		<v-col :cols="(display.width.value > display.height.value) ? 6 : 12" class="print-pagebreak" :style="`height: ${chartColumnHeight};`">
-			<!-- budget -->
-			<apexchart :options="fundChartOptions" :series="funds" width="100%" ref="fundChart" />
-			<!-- year-hour-rate -->
-			<apexchart :options="hrateChartOptions" :series="series" width="100%" ref="hrateChart" style="transform: translateY(-100%);" />
-		</v-col>
-		<v-col>
-			<div v-if="!store.is_printing" class="d-flex justify-center align-center">
-        		<v-card flat max-width="640px" class="no-print">
-					<v-tabs v-model="openReportTab" color="primary" fixed-tabs grow density="compact">
-						<v-tab value="summary">Summary</v-tab>
-						<v-tab value="info">Chart Info</v-tab>
-					</v-tabs>
-					<v-window v-model="openReportTab">
-						<v-window-item value="summary">
-							<chartsummary :sim_data="sim_data" />
-						</v-window-item>
-						<v-window-item value="info">
-							<chartinfo />
-						</v-window-item>
-					</v-window>
-				</v-card>
-			</div>
-			<div class="when-print">
-				<chartsummary :sim_data="sim_data" class="print-pagebreak" />
-				<chartinfo />
-			</div>
-		</v-col>
-	</v-row>
+	<template v-else>
+		<a href="https://tsprojectsblog.wordpress.com/2023/03/28/life-is-money/#how-to-read-the-charts" target="_blank" class="no-print mx-4">How to read the chart?</a>
+
+		<v-row  :key="updateChart" :class="`print-full-width`">
+			<v-col :cols="(display.width.value > display.height.value) ? 6 : 12" class="print-pagebreak" :style="`height: ${chartColumnHeight};`">
+				<!-- budget -->
+				<apexchart :options="fundChartOptions" :series="funds" width="100%" ref="fundChart" />
+				<!-- year-hour-rate -->
+				<apexchart :options="hrateChartOptions" :series="series" width="100%" ref="hrateChart" style="transform: translateY(-100%);" />
+			</v-col>
+			<v-col>
+				<div v-if="!store.is_printing" class="d-flex justify-center align-center">
+					<v-card flat max-width="640px" class="no-print">
+						<v-tabs v-model="openReportTab" color="primary" fixed-tabs grow density="compact">
+							<v-tab value="summary">Summary</v-tab>
+							<v-tab value="info">Chart Info</v-tab>
+						</v-tabs>
+						<v-window v-model="openReportTab">
+							<v-window-item value="summary">
+								<chartsummary :sim_data="sim_data" />
+							</v-window-item>
+							<v-window-item value="info">
+								<chartinfo />
+							</v-window-item>
+						</v-window>
+					</v-card>
+				</div>
+				<div class="when-print">
+					<chartsummary :sim_data="sim_data" class="print-pagebreak" />
+					<chartinfo />
+				</div>
+			</v-col>
+		</v-row>
+	</template>
 </template>
 <script setup lang="ts">
 

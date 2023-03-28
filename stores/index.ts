@@ -67,7 +67,6 @@ export default defineStore("defualt",
             {
                 window.print();
                 printing = false;
-                this.show_notification("Downloaded simulation report.");
             });
         },
 

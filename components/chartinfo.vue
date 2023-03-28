@@ -1,7 +1,7 @@
 <template>
     <v-card class="ma-0 text-justify">
         <v-card-text class="ma-0 pa-2">
-            <v-alert title="funds" variant="tonal" density="compact" border="start" border-color="secondary" class="mb-2">
+            <v-alert title="Funds" variant="tonal" density="compact" border="start" border-color="secondary" class="mb-2">
                 The <strong class="text-secondary">funds</strong> <strong>line</strong> displays the growth of the total amount of funds over the years. To provide a comprehensive picture of the potential trajectory of funds under different economic conditions, a <strong class="text-secondary">confidence</strong> <strong>interval</strong> has been included. This interval illustrates the possible development of funds under favorable and unfavorable economic circumstances.
             </v-alert>
             <v-alert title="Financial Independence" variant="tonal" density="compact" border="start" border-color="primary" class="mb-2">

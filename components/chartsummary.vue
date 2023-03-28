@@ -35,7 +35,7 @@
                             <td>{{ compactNumber(store.minimum_monthly_expenses) }}</td>
                         </tr>
                         <tr>
-                            <td>funding period</td>
+                            <td>Funding period</td>
                             <td>{{ store.funding_period }} years</td>
                         </tr>
                         <tr>
