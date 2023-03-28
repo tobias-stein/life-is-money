@@ -401,10 +401,12 @@
 
 		setTimeout(() => 
 		{
+			const year = Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2));
+			
 			// update FI marker
 			hrateChart.value.clearAnnotations();
 			hrateChart.value.addXaxisAnnotation({
-				x: Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2)),
+				x: Math.ceil(year),
 				label: {
 					text: 'Financial Independence',
 					position: 'bottom',
@@ -417,7 +419,7 @@
 					}
 				},
 			});
-			updateFoundChart(Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2)));
+			updateFoundChart(year);
 		});
 
 		// force redrawing of chart
