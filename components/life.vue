@@ -18,7 +18,7 @@
 	<v-row v-else :key="updateChart" :class="`print-full-width`">
 		<v-col :cols="(display.width.value > display.height.value) ? 6 : 12" class="print-pagebreak" :style="`height: ${chartColumnHeight};`">
 			<!-- budget -->
-			<apexchart :options="foundChartOptions" :series="founds" width="100%" ref="foundChart" />
+			<apexchart :options="fundChartOptions" :series="funds" width="100%" ref="fundChart" />
 			<!-- year-hour-rate -->
 			<apexchart :options="hrateChartOptions" :series="series" width="100%" ref="hrateChart" style="transform: translateY(-100%);" />
 		</v-col>
@@ -66,7 +66,7 @@
 	const chartColumnHeight = ref('100%');
 
 	const hrateChart = ref();
-	const foundChart = ref();
+	const fundChart = ref();
 	const updateChart = ref(0);
 	const display = useDisplay();
 	const sim_data = ref({} as TSimData);
@@ -78,14 +78,14 @@
 		updateChart.value++;
 	});
 
-	let founds: any[] = [];
+	let funds: any[] = [];
 	let series: any[] = [];
 	let this_chart_cursor_pos = { x: 0, y: 0 };
 	let last_chart_cursor_pos = { x: 0, y: 0 };
 	
-	let updateFoundsChart: number | undefined = undefined;
+	let updatefundsChart: number | undefined = undefined;
 
-	const foundChartOptions = 
+	const fundChartOptions = 
 	{
 		chart:
 		{
@@ -116,7 +116,7 @@
 		{
 			type: 'numeric',
 			min: 0,
-			max: store.founding_period,
+			max: store.funding_period,
 			labels: 
 			{ 
 				minHeight: 40,
@@ -203,7 +203,7 @@
 		{
 			type: 'numeric',
 			min: 0,
-			max: store.founding_period,
+			max: store.funding_period,
 			labels: 
 			{
 				minHeight: 40,
@@ -275,13 +275,13 @@
 					},
 				});
 
-				clearTimeout(updateFoundsChart);
-				updateFoundsChart = setTimeout(() => 
+				clearTimeout(updatefundsChart);
+				updatefundsChart = setTimeout(() => 
 				{
 					if(this_chart_cursor_pos.x !== last_chart_cursor_pos.x)
 					{
 						last_chart_cursor_pos.x = this_chart_cursor_pos.x;
-						updateFoundChart(year);
+						updatefundChart(year);
 					}
 				}, 200);
 				
@@ -314,33 +314,33 @@
 		markers: { shape: 'square' }
 	};
 
-	function updateFoundChart(year: number)
+	function updatefundChart(year: number)
 	{
 		const rate_user = hrateChart.value.chart.w.config.series[0].data[year].y;
 		const [rate_lower, rate_upper] = hrateChart.value.chart.w.config.series[1].data[year].y;
 
-		const rate_founds 		= sim_data.value.user.founds.get(rate_user);
-		const rate_founds_upper = sim_data.value.best.founds.get(rate_lower);
-		const rate_founds_lower = sim_data.value.worst.founds.get(rate_upper);
+		const rate_funds 		= sim_data.value.user.funds.get(rate_user);
+		const rate_funds_upper = sim_data.value.best.funds.get(rate_lower);
+		const rate_funds_lower = sim_data.value.worst.funds.get(rate_upper);
 		
-		if(rate_founds !== undefined && rate_founds_lower !== undefined && rate_founds_upper !== undefined)
+		if(rate_funds !== undefined && rate_funds_lower !== undefined && rate_funds_upper !== undefined)
 		{
-			foundChart.value.chart.updateOptions(
+			fundChart.value.chart.updateOptions(
 			{
 				series: 
 				[
-					{ name: 'Founds', type: 'line', data: [...rate_founds.keys()].map(y => { return { x: y, y: rate_founds.get(y) }; }) },
+					{ name: 'funds', type: 'line', data: [...rate_funds.keys()].map(y => { return { x: y, y: rate_funds.get(y) }; }) },
 					{ 
-						name: 'Founds Confidence', 
+						name: 'funds Confidence', 
 						type: 'rangeArea', 
-						data: [...rate_founds.keys()]
+						data: [...rate_funds.keys()]
 							.map(y => 
 							{ 
 								return { 
 									x: y, 
 									y: [
-										Math.min(rate_founds_lower.get(y)!, rate_founds_upper.get(y)!, rate_founds.get(y)!),
-										Math.max(rate_founds_lower.get(y)!, rate_founds_upper.get(y)!, rate_founds.get(y)!),
+										Math.min(rate_funds_lower.get(y)!, rate_funds_upper.get(y)!, rate_funds.get(y)!),
+										Math.max(rate_funds_lower.get(y)!, rate_funds_upper.get(y)!, rate_funds.get(y)!),
 									]
 								}; 
 							}) 
@@ -381,9 +381,9 @@
 		// series 4
 		series.push({ name: 'IF Confidence', type: 'rangeArea', data: toXY(data['worst'].fail_values).map(xy => { return { x: xy.x, y: [0.0, xy.y] }; }) });
 
-		foundChartOptions.yaxis.max = Math.max(data.user.total_founds_max, data.worst.total_founds_max, data.best.total_founds_max);
+		fundChartOptions.yaxis.max = Math.max(data.user.total_funds_max, data.worst.total_funds_max, data.best.total_funds_max);
 		hrateChartOptions.yaxis.max = quantile([...data['user'].fi_values.values()], 0.9);
-		hrateChartOptions.xaxis.max = store.founding_period;
+		hrateChartOptions.xaxis.max = store.funding_period;
 
 		// hrateChartOptions.chart.toolbar.tools.customIcons = [
 		// {
@@ -392,7 +392,7 @@
 		// 	title: 'Reset zoom',
 		// 	click: () => 
 		// 	{ 
-		// 		setTimeout(() => updateFoundChart(Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2))));
+		// 		setTimeout(() => updatefundChart(Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2))));
 		// 		updateChart.value++; 
 		// 	}
 		// }];
@@ -419,7 +419,7 @@
 					}
 				},
 			});
-			updateFoundChart(year);
+			updatefundChart(year);
 		});
 
 		// force redrawing of chart

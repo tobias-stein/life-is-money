@@ -2,10 +2,10 @@
     <div class="d-flex justify-center align-center text-justify">
         <v-card flat max-width="640px">
             <div class="text-h6 ma-4">
-                <span>What is your estimated founding period?</span>
+                <span>What is your estimated funding period?</span>
             </div>
             <v-card-text>
-                The <strong>founding period</strong> refers to the length of time, measured in years, between the present day and the estimated date of your death. It is an important factor in financial planning, as it helps to determine the amount of funding required to cover expenses over the course of one's lifetime.
+                The <strong>funding period</strong> refers to the length of time, measured in years, between the present day and the estimated date of your death. It is an important factor in financial planning, as it helps to determine the amount of funding required to cover expenses over the course of one's lifetime.
             </v-card-text>
             <v-card-actions>
                 <v-text-field v-model="current_age" type="number" label="Your current age" variant="outlined" @update:focused="onFocus">
@@ -18,14 +18,14 @@
                     </v-text-field>
             </v-card-actions>
             <v-card-actions>
-                <v-text-field v-model="store.founding_period" disabled label="Total founding period" variant="outlined" hide-details>
+                <v-text-field v-model="store.funding_period" disabled label="Total funding period" variant="outlined" hide-details>
                     <template v-slot:append-inner>Years</template>
                 </v-text-field>
             </v-card-actions>
 
             <collapsable 
-                title="Founding Period Length" 
-                :text=founding_period_length_text 
+                title="funding Period Length" 
+                :text=funding_period_length_text 
                 color="primary" 
                 icon="mdi-calendar-clock-outline" 
             />
@@ -56,5 +56,5 @@
         }
     }
 
-    const founding_period_length_text = "Please note that a longer founding period will require a significantly larger amount of funds due to the impact of inflation on the cost of goods and services over time, leading to a greater founding requirement to maintain the same standard of living."
+    const funding_period_length_text = "Please note that a longer funding period will require a significantly larger amount of funds due to the impact of inflation on the cost of goods and services over time, leading to a greater funding requirement to maintain the same standard of living."
 </script>

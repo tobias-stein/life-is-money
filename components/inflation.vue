@@ -28,7 +28,7 @@
 
             <collapsable 
                 title="Inflation Is Fluctuating" 
-                text="It is important to note that annual inflation rates can be subject to fluctuations. For the sake of simplicity, we will assume that the average annual inflation rate remains constant throughout the entire founding period." 
+                text="It is important to note that annual inflation rates can be subject to fluctuations. For the sake of simplicity, we will assume that the average annual inflation rate remains constant throughout the entire funding period." 
             />
         </v-card>
     </div>

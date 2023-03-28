@@ -2,8 +2,8 @@
     <v-card class="ma-0 text-justify">
         <v-card-text class="ma-0 pa-2">
             
-            <v-alert icon="mdi-sigma" title="Total required founds" variant="tonal" density="compact" border="start" border-color="secondary" class="mb-2">
-                The total amount of funds required to sustain a period of <strong>{{ store.founding_period }}</strong> years with monthly expenditures of <strong>{{ compactNumber(store.minimum_monthly_expenses) }}</strong> (<strong>{{ compactNumber(store.min_annual_expenses) }}</strong> annually) is <strong class="text-secondary">{{ compactNumber(total_required_founds) }}</strong>, which has been adjusted to account for the inflation rate over time.
+            <v-alert icon="mdi-sigma" title="Total required funds" variant="tonal" density="compact" border="start" border-color="secondary" class="mb-2">
+                The total amount of funds required to sustain a period of <strong>{{ store.funding_period }}</strong> years with monthly expenditures of <strong>{{ compactNumber(store.minimum_monthly_expenses) }}</strong> (<strong>{{ compactNumber(store.min_annual_expenses) }}</strong> annually) is <strong class="text-secondary">{{ compactNumber(total_required_funds) }}</strong>, which has been adjusted to account for the inflation rate over time.
             </v-alert>
 
             <v-alert icon="mdi-flag-triangle" title="Financial Independence"  variant="tonal" density="compact" border="start" border-color="primary" class="mb-2">
@@ -24,7 +24,7 @@
             </v-alert>
        
             <v-alert icon="mdi-currency-usd" title="Minimum required hour rate" variant="tonal" density="compact" border="start" border-color="error" class="mb-2">
-                To adequately cover <strong>{{ compactNumber(store.minimum_monthly_expenses) }}</strong>'s monthly expenses over a <strong>{{ store.founding_period }}</strong>-year period, a minimum hourly rate of <strong class="text-primary">{{ compactNumber(min_required_rate_user) }}</strong> will be necessary. In the event of an unfavorable economic climate, a minimum hourly rate of <strong class="text-primary">{{ compactNumber(min_required_rate_wors) }}</strong>  will be required.
+                To adequately cover <strong>{{ compactNumber(store.minimum_monthly_expenses) }}</strong>'s monthly expenses over a <strong>{{ store.funding_period }}</strong>-year period, a minimum hourly rate of <strong class="text-primary">{{ compactNumber(min_required_rate_user) }}</strong> will be necessary. In the event of an unfavorable economic climate, a minimum hourly rate of <strong class="text-primary">{{ compactNumber(min_required_rate_wors) }}</strong>  will be required.
             </v-alert>
          
             <v-alert icon="mdi-cogs" title="Simulation inputs" variant="tonal" density="compact" border="start" class="mb-2">
@@ -35,12 +35,12 @@
                             <td>{{ compactNumber(store.minimum_monthly_expenses) }}</td>
                         </tr>
                         <tr>
-                            <td>Founding period</td>
-                            <td>{{ store.founding_period }} years</td>
+                            <td>funding period</td>
+                            <td>{{ store.funding_period }} years</td>
                         </tr>
                         <tr>
                             <td>Initial savings</td>
-                            <td>{{ (store.initial_founds).toFixed(2) }}</td>
+                            <td>{{ (store.initial_funds).toFixed(2) }}</td>
                         </tr>
                         <tr>
                             <td>Initial investments</td>
@@ -97,7 +97,7 @@
 </template>
 <script setup lang="ts">
     import useDefaultStore from "@/stores";
-    import { forecast_min_required_founds, quantile, compactNumber } from "@/src/util";
+    import { forecast_min_required_funds, quantile, compactNumber } from "@/src/util";
     import { ISimulationResults } from "@/src/simulation";
     
     const store = useDefaultStore();
@@ -106,9 +106,9 @@
         sim_data: { type: Object as PropType<{ [scenario: string]: ISimulationResults }>, required: true }
     });
 
-    const total_required_founds = computed(() => 
+    const total_required_funds = computed(() => 
     {
-        return forecast_min_required_founds(store.minimum_monthly_expenses, store.annual_average_inflation_rate, store.founding_period);
+        return forecast_min_required_funds(store.minimum_monthly_expenses, store.annual_average_inflation_rate, store.funding_period);
     });
 
     const min_required_rate_user = computed(() => 

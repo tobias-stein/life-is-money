@@ -15,7 +15,7 @@
                 I sincerely hope that my assistance today has been of great help to you in your quest for financial independence. 
                 After all, life is too precious to spend 40 hours a week toiling away for someone else, leaving little time for oneself. 
                 This is precisely why I created this website - to aid you and others in your pursuit of early retirement. 
-                It was not without time and effort that I brought this website to life, and if you have found it valuable, 
+                It was not without time and effort that I brought this website to life, and if you have fund it valuable, 
                 you can express your appreciation by treating me to a cup of coffee<v-icon small class="ml-2">mdi-account-heart</v-icon>. Of course, if you are unable to do so, simply sharing 
                 this website with others would be a most welcome gesture as well.
             </span>

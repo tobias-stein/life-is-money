@@ -19,8 +19,8 @@ export default defineStore("defualt",
         expected_age: 92,
 
         // savings & investments
-        // initial (note: founds are treated as normal cash in bank accounts, incl. savings instantly accessible)
-        initial_founds: 0.0,
+        // initial (note: funds are treated as normal cash in bank accounts, incl. savings instantly accessible)
+        initial_funds: 0.0,
         initial_invest: 0.0,
         
         use_monthly_saving_plan: true,
@@ -49,7 +49,7 @@ export default defineStore("defualt",
     getters: 
     {
         min_annual_expenses: (state) => { return state.minimum_monthly_expenses * 12.0; },
-        founding_period: (state) => { return state.expected_age - state.current_age; },
+        funding_period: (state) => { return state.expected_age - state.current_age; },
         annual_saving_rate: (state) => { return state.monthly_saving_rate * 12.0; },
         is_busy: (state) => { return state.simulation.is_running; },
         simulation_progress: (state) => { return (state.simulation.progress.reduce((acc, x) => acc += x ? x : 0, 0) / state.simulation.progress.length) * 100; },
@@ -95,7 +95,7 @@ export default defineStore("defualt",
             {   
                 return {
                     expected_min_annual_expenses:    this.min_annual_expenses,
-                    founding_period_years:          this.founding_period,
+                    funding_period_years:          this.funding_period,
                     annual_saving_rate:              this.use_monthly_saving_plan ? this.annual_saving_rate : 0.0,
                     saving_risk_ratio:              this.saving_risk_ratio,
                     income_tax:                     this.income_tax,
@@ -103,7 +103,7 @@ export default defineStore("defualt",
                     avg_annual_inflation_rate:       this.annual_average_inflation_rate * inflation_rate_multiplier, 
                     avg_annual_invest_return:        this.annual_average_invest_return * investment_return_multiplier,
                     adj_hr_by_inflation:            this.inflation_adjusted_hour_rate,
-                    initial_founds:                 this.initial_founds,
+                    initial_funds:                 this.initial_funds,
                     initial_invest:                 this.initial_invest
                 } as ISimulationInput;
             }

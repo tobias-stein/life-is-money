@@ -8,7 +8,7 @@
 				Savings generally refers to money that you set aside for future use, typically in a low-risk account like a savings account. The purpose of saving is to have a pool of funds that can be accessed quickly in case of an emergency or unexpected expense. Savings usually earn interest, but the rates tend to be lower than those of investments because they are considered to be lower risk.
 			</v-card-text>
 			<v-card-actions>
-				<v-text-field v-model="initial_founds" label="Your current savings" variant="outlined" hide-details :type="focused_founds ? 'number' : 'text'" @update:focused="(value) => focused_founds=value" />
+				<v-text-field v-model="initial_funds" label="Your current savings" variant="outlined" hide-details :type="focused_funds ? 'number' : 'text'" @update:focused="(value) => focused_funds=value" />
 			</v-card-actions>
 
 			<v-card-text>
@@ -45,7 +45,7 @@
 			</template>
 			<collapsable v-else
 				title="No Saving Strategy?" 
-				text="You should consider a monthly saving strategy in order to reach your total required founds before the end of the founding period." 
+				text="You should consider a monthly saving strategy in order to reach your total required funds before the end of the funding period." 
 				color="warning"
 			/>
 
@@ -60,17 +60,17 @@
 	import useDefaultStore from "@/stores"
 
 	const store = useDefaultStore();
-    const focused_founds = ref(false);
+    const focused_funds = ref(false);
     const focused_invest = ref(false);
     const focused_saving = ref(false);
 
-	const initial_founds = computed(
+	const initial_funds = computed(
 	{
 		get: function()         
 		{ 
-			return focused_founds.value ? store.initial_founds : Intl.NumberFormat(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(store.initial_founds); 
+			return focused_funds.value ? store.initial_funds : Intl.NumberFormat(navigator.language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(store.initial_funds); 
 		},
-		set: function(newValue) { store.initial_founds = Math.max(0.0, newValue); }
+		set: function(newValue) { store.initial_funds = Math.max(0.0, newValue); }
 	});
 
 	const initial_invest = computed(
