@@ -265,12 +265,12 @@
 					label: {
 						text: 'Financial Independence',
 						position: 'bottom',
-						offsetX: 22,
-						offsetY: -6,
+						offsetX: 19,
+						offsetY: -4,
 						style: {
 							color: theme.global.current.value.colors.primary,
 							background: theme.global.current.value.colors["background"],
-							fontSize: '14px',
+							fontSize: '12px',
 						}
 					},
 				});
@@ -399,7 +399,26 @@
 
 		chartColumnHeight.value = `${Math.ceil(hrateChart.value.chart.w.globals.svgHeight)}px`;
 
-		setTimeout(() => updateFoundChart(Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2))));
+		setTimeout(() => 
+		{
+			// update FI marker
+			hrateChart.value.clearAnnotations();
+			hrateChart.value.addXaxisAnnotation({
+				x: Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2)),
+				label: {
+					text: 'Financial Independence',
+					position: 'bottom',
+					offsetX: 19,
+					offsetY: -4,
+					style: {
+						color: theme.global.current.value.colors.primary,
+						background: theme.global.current.value.colors["background"],
+						fontSize: '12px',
+					}
+				},
+			});
+			updateFoundChart(Math.ceil(quantile([...data['user'].fi_values.keys()], 0.2)));
+		});
 
 		// force redrawing of chart
 		updateChart.value++;
@@ -411,7 +430,8 @@
 	width: 290px;
 
 	margin: 0px; 
-	padding: 4px; 
+	padding-left: 4px; 
+	padding-right: 4px; 
 
 	overflow-wrap: break-word;
 	hyphens: auto; 
