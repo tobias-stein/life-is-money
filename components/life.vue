@@ -15,8 +15,8 @@
 	</v-container>
 
 	<!-- chart & summary -->
-	<v-row v-else :key="updateChart" :class="`print-full-width flex-${(display.width.value > display.height.value) ? 6 : 12}`">
-		<v-col class="print-pagebreak" :style="`height: ${chartColumnHeight};`">
+	<v-row v-else :key="updateChart" :class="`print-full-width`">
+		<v-col :cols="(display.width.value > display.height.value) ? 6 : 12" class="print-pagebreak" :style="`height: ${chartColumnHeight};`">
 			<!-- budget -->
 			<apexchart :options="foundChartOptions" :series="founds" width="100%" ref="foundChart" />
 			<!-- year-hour-rate -->
